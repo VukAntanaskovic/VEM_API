@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="461dc5e6672548e4a32168ed2b7530cb" Name="Diagram1">
+        <EntityTypeShape EntityType="VEMTESTModel.Adresar" Width="1.5" PointX="8.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Api_Pristup" Width="1.5" PointX="10.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Artikal" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Autorizacija_Korisnika" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Dokument" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Isporuka" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Jedinica_Mere" Width="1.5" PointX="11.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Komitent" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Korisnik_Sistema" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Krajnji_Primalac" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.log_VEM" Width="1.5" PointX="12.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Poslovnica" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Raf" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Status_Isporuke" Width="1.5" PointX="12.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Stavke_Dokumenta" Width="1.5" PointX="10.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Stavke_Isporuke" Width="1.5" PointX="9.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Stavke_Tovarnog_Lista" Width="1.5" PointX="12.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Tip_Dokumenta" Width="1.5" PointX="3" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Tovarni_List" Width="1.5" PointX="10.5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Vozac" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Vozilo" Width="1.5" PointX="6" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VEMTESTModel.Zaliha_artikla" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <AssociationConnector Association="VEMTESTModel.FK_Stavke_Dokumenta_Artikal" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Stavke_Isporuke_Artikal" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Zaliha_artikla_Artikal" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Korisnik_Sistema_Autorizacija_Korisnika" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Dokument_Komitent" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Dokument_Korisnik_Sistema" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Dokument_Krajnji_Primalac" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Dokument_Tip_Dokumenta" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Isporuka_Dokument" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Stavke_Dokumenta_Dokument" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Isporuka_Krajnji_Primalac" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Stavke_Isporuke_Isporuka" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Stavke_Tovarnog_Lista_Isporuka" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Korisnik_Sistema_Poslovnica" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Vozac_Korisnik_Sistema" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Raf_Poslovnica" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Zaliha_artikla_Poslovnica" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Zaliha_artikla_Raf" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Stavke_Tovarnog_Lista_Tovarni_List" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Tovarni_List_Vozac" ManuallyRouted="false" />
+        <AssociationConnector Association="VEMTESTModel.FK_Vozac_Vozilo" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VEMTESTModel.Interni_Prenos" Width="1.5" PointX="14.5" PointY="3.25" />
+        <AssociationConnector Association="VEMTESTModel.FK__Interni_P__dok_s__03F0984C" />
+        <AssociationConnector Association="VEMTESTModel.FK__Interni_P__na_po__05D8E0BE" />
+        <AssociationConnector Association="VEMTESTModel.FK__Interni_P__sa_po__04E4BC85" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

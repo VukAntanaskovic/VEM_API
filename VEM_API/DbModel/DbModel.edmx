@@ -1,0 +1,1665 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VEMTESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adresar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="adresa" Type="nvarchar" MaxLength="100" />
+          <Property Name="grad" Type="nvarchar" MaxLength="100" />
+          <Property Name="opstina" Type="nvarchar" MaxLength="100" />
+          <Property Name="ptt" Type="int" />
+        </EntityType>
+        <EntityType Name="Api_Pristup">
+          <Key>
+            <PropertyRef Name="api_sifra_korisnika" />
+          </Key>
+          <Property Name="api_sifra_korisnika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="api_naziv_korisnika" Type="nvarchar" MaxLength="50" />
+          <Property Name="api_username_korisnika" Type="nvarchar" MaxLength="50" />
+          <Property Name="api_lozinka_korisnika" Type="nvarchar" MaxLength="50" />
+          <Property Name="rest_api" Type="bit" />
+        </EntityType>
+        <EntityType Name="Artikal">
+          <Key>
+            <PropertyRef Name="art_sifra" />
+          </Key>
+          <Property Name="art_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="art_naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="art_proizvodjac" Type="nvarchar" MaxLength="50" />
+          <Property Name="art_ean" Type="nvarchar" MaxLength="50" />
+          <Property Name="art_jedinica_mere" Type="int" />
+          <Property Name="kom_dobavljac" Type="int" />
+          <Property Name="art_tip" Type="nvarchar" MaxLength="50" />
+          <Property Name="art_aktivan" Type="bit" />
+        </EntityType>
+        <EntityType Name="Autorizacija_Korisnika">
+          <Key>
+            <PropertyRef Name="atr_sifra" />
+          </Key>
+          <Property Name="atr_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="atr_naziv" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dokument">
+          <Key>
+            <PropertyRef Name="dok_sifra_dokumenta" />
+          </Key>
+          <Property Name="dok_sifra_dokumenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tip_dokumenta" Type="int" />
+          <Property Name="dok_datum_kreiranja" Type="date" />
+          <Property Name="dok_korisnik" Type="int" />
+          <Property Name="kom_komitent" Type="int" />
+          <Property Name="dok_veza" Type="int" />
+          <Property Name="pri_primalac" Type="int" />
+          <Property Name="psl_sifra_poslovnice" Type="int" />
+          <Property Name="dok_datum_isporuke" Type="date" />
+          <Property Name="dok_napomena" Type="nvarchar(max)" />
+          <Property Name="dok_broj_dokumenta" Type="varchar" MaxLength="50" />
+          <Property Name="dok_otvoren" Type="bit" />
+        </EntityType>
+        <EntityType Name="Interni_Prenos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="dok_sifra" Type="int" Nullable="false" />
+          <Property Name="sa_poslovnice" Type="int" Nullable="false" />
+          <Property Name="na_poslovnicu" Type="int" Nullable="false" />
+          <Property Name="datum_kreiranja" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Isporuka">
+          <Key>
+            <PropertyRef Name="isp_broj" />
+          </Key>
+          <Property Name="isp_broj" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pri_primalac" Type="int" />
+          <Property Name="isp_datum" Type="date" />
+          <Property Name="dok_veza" Type="int" />
+          <Property Name="sts_status" Type="int" />
+        </EntityType>
+        <EntityType Name="Jedinica_Mere">
+          <Key>
+            <PropertyRef Name="jed_sifra" />
+          </Key>
+          <Property Name="jed_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="jed_naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="jed_kratki_naziv" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Komitent">
+          <Key>
+            <PropertyRef Name="kom_sifra" />
+          </Key>
+          <Property Name="kom_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kom_naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="kom_adresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="kom_grad" Type="nvarchar" MaxLength="50" />
+          <Property Name="kom_ptt" Type="nvarchar" MaxLength="50" />
+          <Property Name="kom_dobavljac" Type="bit" />
+          <Property Name="kom_aktivan" Type="bit" />
+          <Property Name="kom_PIB" Type="nchar" MaxLength="10" />
+          <Property Name="kom_MBR" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Korisnik_Sistema">
+          <Key>
+            <PropertyRef Name="kor_sifra" />
+          </Key>
+          <Property Name="kor_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kor_ime" Type="nvarchar" MaxLength="50" />
+          <Property Name="kor_prezime" Type="nvarchar" MaxLength="50" />
+          <Property Name="kor_telefon" Type="nvarchar" MaxLength="20" />
+          <Property Name="kor_username" Type="nvarchar" MaxLength="50" />
+          <Property Name="kor_password" Type="nvarchar" MaxLength="50" />
+          <Property Name="atr_autorizacija" Type="int" Nullable="false" />
+          <Property Name="psl_poslovnica_rada" Type="int" />
+          <Property Name="VEM_WEB" Type="bit" />
+          <Property Name="VEM_GUI" Type="bit" />
+          <Property Name="VEM_MOBILE" Type="bit" />
+        </EntityType>
+        <EntityType Name="Krajnji_Primalac">
+          <Key>
+            <PropertyRef Name="pri_sifra" />
+          </Key>
+          <Property Name="pri_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pri_ime_prezime" Type="nvarchar" MaxLength="50" />
+          <Property Name="pri_adresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="pri_adresa_broj" Type="nchar" MaxLength="10" />
+          <Property Name="pri_grad" Type="nvarchar" MaxLength="50" />
+          <Property Name="pri_ptt" Type="int" />
+          <Property Name="pri_telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="pri_email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="log_VEM">
+          <Key>
+            <PropertyRef Name="log_id" />
+          </Key>
+          <Property Name="log_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="log_function" Type="varchar(max)" />
+          <Property Name="log_date" Type="date" />
+          <Property Name="log_time" Type="varchar" MaxLength="30" />
+          <Property Name="log_message" Type="varchar(max)" />
+          <Property Name="log_isError" Type="bit" />
+        </EntityType>
+        <EntityType Name="Poslovnica">
+          <Key>
+            <PropertyRef Name="psl_sifra" />
+          </Key>
+          <Property Name="psl_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="psl_naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="psl_aktivna" Type="bit" />
+        </EntityType>
+        <EntityType Name="Raf">
+          <Key>
+            <PropertyRef Name="raf_sifra" />
+          </Key>
+          <Property Name="raf_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="raf_lokacija" Type="nvarchar" MaxLength="50" />
+          <Property Name="psl_poslovnica" Type="int" />
+        </EntityType>
+        <EntityType Name="Status_Isporuke">
+          <Key>
+            <PropertyRef Name="sts_sifra" />
+          </Key>
+          <Property Name="sts_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sts_naziv" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Stavke_Dokumenta">
+          <Key>
+            <PropertyRef Name="stv_id" />
+          </Key>
+          <Property Name="dok_broj_dokumenta" Type="int" />
+          <Property Name="stv_sifra_artikla" Type="int" />
+          <Property Name="stv_kolicina" Type="int" />
+          <Property Name="stv_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stavke_Isporuke">
+          <Key>
+            <PropertyRef Name="stv_id" />
+          </Key>
+          <Property Name="art_sifra" Type="int" />
+          <Property Name="art_kolicina" Type="int" />
+          <Property Name="isp_broj" Type="int" />
+          <Property Name="stv_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stavke_Tovarnog_Lista">
+          <Key>
+            <PropertyRef Name="stv_id" />
+          </Key>
+          <Property Name="tl_broj" Type="int" />
+          <Property Name="isp_broj" Type="int" />
+          <Property Name="stv_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tip_Dokumenta">
+          <Key>
+            <PropertyRef Name="tipdok_sifra" />
+          </Key>
+          <Property Name="tipdok_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipdok_kratki_naziv" Type="nchar" MaxLength="10" />
+          <Property Name="tipdok_naziv" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tovarni_List">
+          <Key>
+            <PropertyRef Name="tl_broj" />
+          </Key>
+          <Property Name="tl_broj" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tl_datum_kreiranja" Type="date" />
+          <Property Name="vzc_vozac" Type="int" />
+          <Property Name="tl_zatvoren" Type="bit" />
+        </EntityType>
+        <EntityType Name="Vozac">
+          <Key>
+            <PropertyRef Name="vzc_sifra" />
+          </Key>
+          <Property Name="vzc_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kor_sifra" Type="int" />
+          <Property Name="vzl_sifra" Type="int" />
+        </EntityType>
+        <EntityType Name="Vozilo">
+          <Key>
+            <PropertyRef Name="vzl_sifra" />
+          </Key>
+          <Property Name="vzl_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vzl_marka" Type="nvarchar" MaxLength="50" />
+          <Property Name="vzl_model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vzl_registracija" Type="nchar" MaxLength="10" />
+          <Property Name="vzl_slika" Type="varchar(max)" />
+          <Property Name="vzl_aktivno" Type="bit" />
+        </EntityType>
+        <EntityType Name="Zaliha_artikla">
+          <Key>
+            <PropertyRef Name="zal_sifra" />
+          </Key>
+          <Property Name="zal_sifra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="art_sifra" Type="int" />
+          <Property Name="art_dostupna_kolicina" Type="int" />
+          <Property Name="art_rezervisana_kolicina" Type="int" />
+          <Property Name="psl_poslovnica" Type="int" />
+          <Property Name="raf_sifra" Type="int" />
+        </EntityType>
+        <Association Name="FK__Interni_P__dok_s__03F0984C">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="1" />
+          <End Role="Interni_Prenos" Type="Self.Interni_Prenos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="dok_sifra_dokumenta" />
+            </Principal>
+            <Dependent Role="Interni_Prenos">
+              <PropertyRef Name="dok_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interni_P__na_po__05D8E0BE">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="1" />
+          <End Role="Interni_Prenos" Type="Self.Interni_Prenos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Interni_Prenos">
+              <PropertyRef Name="na_poslovnicu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interni_P__sa_po__04E4BC85">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="1" />
+          <End Role="Interni_Prenos" Type="Self.Interni_Prenos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Interni_Prenos">
+              <PropertyRef Name="sa_poslovnice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Komitent">
+          <End Role="Komitent" Type="Self.Komitent" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Komitent">
+              <PropertyRef Name="kom_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="kom_komitent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Korisnik_Sistema">
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik_Sistema">
+              <PropertyRef Name="kor_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="dok_korisnik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Krajnji_Primalac">
+          <End Role="Krajnji_Primalac" Type="Self.Krajnji_Primalac" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Krajnji_Primalac">
+              <PropertyRef Name="pri_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="pri_primalac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Tip_Dokumenta">
+          <End Role="Tip_Dokumenta" Type="Self.Tip_Dokumenta" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tip_Dokumenta">
+              <PropertyRef Name="tipdok_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="tip_dokumenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Isporuka_Dokument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="0..1" />
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="dok_sifra_dokumenta" />
+            </Principal>
+            <Dependent Role="Isporuka">
+              <PropertyRef Name="dok_veza" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Isporuka_Krajnji_Primalac">
+          <End Role="Krajnji_Primalac" Type="Self.Krajnji_Primalac" Multiplicity="0..1" />
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Krajnji_Primalac">
+              <PropertyRef Name="pri_sifra" />
+            </Principal>
+            <Dependent Role="Isporuka">
+              <PropertyRef Name="pri_primalac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Korisnik_Sistema_Autorizacija_Korisnika">
+          <End Role="Autorizacija_Korisnika" Type="Self.Autorizacija_Korisnika" Multiplicity="1" />
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autorizacija_Korisnika">
+              <PropertyRef Name="atr_sifra" />
+            </Principal>
+            <Dependent Role="Korisnik_Sistema">
+              <PropertyRef Name="atr_autorizacija" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Korisnik_Sistema_Poslovnica">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="0..1" />
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Korisnik_Sistema">
+              <PropertyRef Name="psl_poslovnica_rada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Raf_Poslovnica">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="0..1" />
+          <End Role="Raf" Type="Self.Raf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Raf">
+              <PropertyRef Name="psl_poslovnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Dokumenta_Artikal">
+          <End Role="Artikal" Type="Self.Artikal" Multiplicity="0..1" />
+          <End Role="Stavke_Dokumenta" Type="Self.Stavke_Dokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikal">
+              <PropertyRef Name="art_sifra" />
+            </Principal>
+            <Dependent Role="Stavke_Dokumenta">
+              <PropertyRef Name="stv_sifra_artikla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Dokumenta_Dokument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="0..1" />
+          <End Role="Stavke_Dokumenta" Type="Self.Stavke_Dokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="dok_sifra_dokumenta" />
+            </Principal>
+            <Dependent Role="Stavke_Dokumenta">
+              <PropertyRef Name="dok_broj_dokumenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Isporuke_Artikal">
+          <End Role="Artikal" Type="Self.Artikal" Multiplicity="0..1" />
+          <End Role="Stavke_Isporuke" Type="Self.Stavke_Isporuke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikal">
+              <PropertyRef Name="art_sifra" />
+            </Principal>
+            <Dependent Role="Stavke_Isporuke">
+              <PropertyRef Name="art_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Isporuke_Isporuka">
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="0..1" />
+          <End Role="Stavke_Isporuke" Type="Self.Stavke_Isporuke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Isporuka">
+              <PropertyRef Name="isp_broj" />
+            </Principal>
+            <Dependent Role="Stavke_Isporuke">
+              <PropertyRef Name="isp_broj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Tovarnog_Lista_Isporuka">
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="0..1" />
+          <End Role="Stavke_Tovarnog_Lista" Type="Self.Stavke_Tovarnog_Lista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Isporuka">
+              <PropertyRef Name="isp_broj" />
+            </Principal>
+            <Dependent Role="Stavke_Tovarnog_Lista">
+              <PropertyRef Name="isp_broj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Tovarnog_Lista_Tovarni_List">
+          <End Role="Tovarni_List" Type="Self.Tovarni_List" Multiplicity="0..1" />
+          <End Role="Stavke_Tovarnog_Lista" Type="Self.Stavke_Tovarnog_Lista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tovarni_List">
+              <PropertyRef Name="tl_broj" />
+            </Principal>
+            <Dependent Role="Stavke_Tovarnog_Lista">
+              <PropertyRef Name="tl_broj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tovarni_List_Vozac">
+          <End Role="Vozac" Type="Self.Vozac" Multiplicity="0..1" />
+          <End Role="Tovarni_List" Type="Self.Tovarni_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vozac">
+              <PropertyRef Name="vzc_sifra" />
+            </Principal>
+            <Dependent Role="Tovarni_List">
+              <PropertyRef Name="vzc_vozac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vozac_Korisnik_Sistema">
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="0..1" />
+          <End Role="Vozac" Type="Self.Vozac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik_Sistema">
+              <PropertyRef Name="kor_sifra" />
+            </Principal>
+            <Dependent Role="Vozac">
+              <PropertyRef Name="kor_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vozac_Vozilo">
+          <End Role="Vozilo" Type="Self.Vozilo" Multiplicity="0..1" />
+          <End Role="Vozac" Type="Self.Vozac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vozilo">
+              <PropertyRef Name="vzl_sifra" />
+            </Principal>
+            <Dependent Role="Vozac">
+              <PropertyRef Name="vzl_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaliha_artikla_Artikal">
+          <End Role="Artikal" Type="Self.Artikal" Multiplicity="0..1" />
+          <End Role="Zaliha_artikla" Type="Self.Zaliha_artikla" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikal">
+              <PropertyRef Name="art_sifra" />
+            </Principal>
+            <Dependent Role="Zaliha_artikla">
+              <PropertyRef Name="art_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaliha_artikla_Poslovnica">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="0..1" />
+          <End Role="Zaliha_artikla" Type="Self.Zaliha_artikla" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Zaliha_artikla">
+              <PropertyRef Name="psl_poslovnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaliha_artikla_Raf">
+          <End Role="Raf" Type="Self.Raf" Multiplicity="0..1" />
+          <End Role="Zaliha_artikla" Type="Self.Zaliha_artikla" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Raf">
+              <PropertyRef Name="raf_sifra" />
+            </Principal>
+            <Dependent Role="Zaliha_artikla">
+              <PropertyRef Name="raf_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_Svi_Artikli_Na_Poslovnicu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sifraPoslovnice" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_Unos_Artikla_Na_Zalihu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="prm_art_sifra" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_UpisVezaBroj" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BrojDokumenta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_ZatvaranjeDokumenata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VezaDokumenta" Type="int" Mode="In" />
+          <Parameter Name="TipDokumenta" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="VEMTESTModelStoreContainer">
+          <EntitySet Name="Adresar" EntityType="Self.Adresar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Api_Pristup" EntityType="Self.Api_Pristup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artikal" EntityType="Self.Artikal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Autorizacija_Korisnika" EntityType="Self.Autorizacija_Korisnika" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dokument" EntityType="Self.Dokument" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Interni_Prenos" EntityType="Self.Interni_Prenos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Isporuka" EntityType="Self.Isporuka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jedinica_Mere" EntityType="Self.Jedinica_Mere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Komitent" EntityType="Self.Komitent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnik_Sistema" EntityType="Self.Korisnik_Sistema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Krajnji_Primalac" EntityType="Self.Krajnji_Primalac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log_VEM" EntityType="Self.log_VEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poslovnica" EntityType="Self.Poslovnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Raf" EntityType="Self.Raf" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status_Isporuke" EntityType="Self.Status_Isporuke" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stavke_Dokumenta" EntityType="Self.Stavke_Dokumenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stavke_Isporuke" EntityType="Self.Stavke_Isporuke" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stavke_Tovarnog_Lista" EntityType="Self.Stavke_Tovarnog_Lista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tip_Dokumenta" EntityType="Self.Tip_Dokumenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tovarni_List" EntityType="Self.Tovarni_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vozac" EntityType="Self.Vozac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vozilo" EntityType="Self.Vozilo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zaliha_artikla" EntityType="Self.Zaliha_artikla" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Interni_P__dok_s__03F0984C" Association="Self.FK__Interni_P__dok_s__03F0984C">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="Interni_Prenos" EntitySet="Interni_Prenos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interni_P__na_po__05D8E0BE" Association="Self.FK__Interni_P__na_po__05D8E0BE">
+            <End Role="Poslovnica" EntitySet="Poslovnica" />
+            <End Role="Interni_Prenos" EntitySet="Interni_Prenos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interni_P__sa_po__04E4BC85" Association="Self.FK__Interni_P__sa_po__04E4BC85">
+            <End Role="Poslovnica" EntitySet="Poslovnica" />
+            <End Role="Interni_Prenos" EntitySet="Interni_Prenos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Komitent" Association="Self.FK_Dokument_Komitent">
+            <End Role="Komitent" EntitySet="Komitent" />
+            <End Role="Dokument" EntitySet="Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Korisnik_Sistema" Association="Self.FK_Dokument_Korisnik_Sistema">
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+            <End Role="Dokument" EntitySet="Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Krajnji_Primalac" Association="Self.FK_Dokument_Krajnji_Primalac">
+            <End Role="Krajnji_Primalac" EntitySet="Krajnji_Primalac" />
+            <End Role="Dokument" EntitySet="Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Tip_Dokumenta" Association="Self.FK_Dokument_Tip_Dokumenta">
+            <End Role="Tip_Dokumenta" EntitySet="Tip_Dokumenta" />
+            <End Role="Dokument" EntitySet="Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Isporuka_Dokument" Association="Self.FK_Isporuka_Dokument">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="Isporuka" EntitySet="Isporuka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Isporuka_Krajnji_Primalac" Association="Self.FK_Isporuka_Krajnji_Primalac">
+            <End Role="Krajnji_Primalac" EntitySet="Krajnji_Primalac" />
+            <End Role="Isporuka" EntitySet="Isporuka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Korisnik_Sistema_Autorizacija_Korisnika" Association="Self.FK_Korisnik_Sistema_Autorizacija_Korisnika">
+            <End Role="Autorizacija_Korisnika" EntitySet="Autorizacija_Korisnika" />
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Korisnik_Sistema_Poslovnica" Association="Self.FK_Korisnik_Sistema_Poslovnica">
+            <End Role="Poslovnica" EntitySet="Poslovnica" />
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Raf_Poslovnica" Association="Self.FK_Raf_Poslovnica">
+            <End Role="Poslovnica" EntitySet="Poslovnica" />
+            <End Role="Raf" EntitySet="Raf" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Dokumenta_Artikal" Association="Self.FK_Stavke_Dokumenta_Artikal">
+            <End Role="Artikal" EntitySet="Artikal" />
+            <End Role="Stavke_Dokumenta" EntitySet="Stavke_Dokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Dokumenta_Dokument" Association="Self.FK_Stavke_Dokumenta_Dokument">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="Stavke_Dokumenta" EntitySet="Stavke_Dokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Isporuke_Artikal" Association="Self.FK_Stavke_Isporuke_Artikal">
+            <End Role="Artikal" EntitySet="Artikal" />
+            <End Role="Stavke_Isporuke" EntitySet="Stavke_Isporuke" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Isporuke_Isporuka" Association="Self.FK_Stavke_Isporuke_Isporuka">
+            <End Role="Isporuka" EntitySet="Isporuka" />
+            <End Role="Stavke_Isporuke" EntitySet="Stavke_Isporuke" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Tovarnog_Lista_Isporuka" Association="Self.FK_Stavke_Tovarnog_Lista_Isporuka">
+            <End Role="Isporuka" EntitySet="Isporuka" />
+            <End Role="Stavke_Tovarnog_Lista" EntitySet="Stavke_Tovarnog_Lista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Tovarnog_Lista_Tovarni_List" Association="Self.FK_Stavke_Tovarnog_Lista_Tovarni_List">
+            <End Role="Tovarni_List" EntitySet="Tovarni_List" />
+            <End Role="Stavke_Tovarnog_Lista" EntitySet="Stavke_Tovarnog_Lista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tovarni_List_Vozac" Association="Self.FK_Tovarni_List_Vozac">
+            <End Role="Vozac" EntitySet="Vozac" />
+            <End Role="Tovarni_List" EntitySet="Tovarni_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vozac_Korisnik_Sistema" Association="Self.FK_Vozac_Korisnik_Sistema">
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+            <End Role="Vozac" EntitySet="Vozac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vozac_Vozilo" Association="Self.FK_Vozac_Vozilo">
+            <End Role="Vozilo" EntitySet="Vozilo" />
+            <End Role="Vozac" EntitySet="Vozac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaliha_artikla_Artikal" Association="Self.FK_Zaliha_artikla_Artikal">
+            <End Role="Artikal" EntitySet="Artikal" />
+            <End Role="Zaliha_artikla" EntitySet="Zaliha_artikla" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaliha_artikla_Poslovnica" Association="Self.FK_Zaliha_artikla_Poslovnica">
+            <End Role="Poslovnica" EntitySet="Poslovnica" />
+            <End Role="Zaliha_artikla" EntitySet="Zaliha_artikla" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaliha_artikla_Raf" Association="Self.FK_Zaliha_artikla_Raf">
+            <End Role="Raf" EntitySet="Raf" />
+            <End Role="Zaliha_artikla" EntitySet="Zaliha_artikla" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VEMTESTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adresar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="grad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="opstina" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ptt" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Api_Pristup">
+          <Key>
+            <PropertyRef Name="api_sifra_korisnika" />
+          </Key>
+          <Property Name="api_sifra_korisnika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="api_naziv_korisnika" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="api_username_korisnika" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="api_lozinka_korisnika" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rest_api" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Artikal">
+          <Key>
+            <PropertyRef Name="art_sifra" />
+          </Key>
+          <Property Name="art_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="art_naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="art_proizvodjac" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="art_ean" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="art_jedinica_mere" Type="Int32" />
+          <Property Name="kom_dobavljac" Type="Int32" />
+          <Property Name="art_tip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="art_aktivan" Type="Boolean" />
+          <NavigationProperty Name="Stavke_Dokumenta" Relationship="Self.FK_Stavke_Dokumenta_Artikal" FromRole="Artikal" ToRole="Stavke_Dokumenta" />
+          <NavigationProperty Name="Stavke_Isporuke" Relationship="Self.FK_Stavke_Isporuke_Artikal" FromRole="Artikal" ToRole="Stavke_Isporuke" />
+          <NavigationProperty Name="Zaliha_artikla" Relationship="Self.FK_Zaliha_artikla_Artikal" FromRole="Artikal" ToRole="Zaliha_artikla" />
+        </EntityType>
+        <EntityType Name="Autorizacija_Korisnika">
+          <Key>
+            <PropertyRef Name="atr_sifra" />
+          </Key>
+          <Property Name="atr_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="atr_naziv" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Korisnik_Sistema" Relationship="Self.FK_Korisnik_Sistema_Autorizacija_Korisnika" FromRole="Autorizacija_Korisnika" ToRole="Korisnik_Sistema" />
+        </EntityType>
+        <EntityType Name="Dokument">
+          <Key>
+            <PropertyRef Name="dok_sifra_dokumenta" />
+          </Key>
+          <Property Name="dok_sifra_dokumenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tip_dokumenta" Type="Int32" />
+          <Property Name="dok_datum_kreiranja" Type="DateTime" Precision="0" />
+          <Property Name="dok_korisnik" Type="Int32" />
+          <Property Name="kom_komitent" Type="Int32" />
+          <Property Name="dok_veza" Type="Int32" />
+          <Property Name="pri_primalac" Type="Int32" />
+          <Property Name="psl_sifra_poslovnice" Type="Int32" />
+          <Property Name="dok_datum_isporuke" Type="DateTime" Precision="0" />
+          <Property Name="dok_napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dok_broj_dokumenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dok_otvoren" Type="Boolean" />
+          <NavigationProperty Name="Komitent" Relationship="Self.FK_Dokument_Komitent" FromRole="Dokument" ToRole="Komitent" />
+          <NavigationProperty Name="Korisnik_Sistema" Relationship="Self.FK_Dokument_Korisnik_Sistema" FromRole="Dokument" ToRole="Korisnik_Sistema" />
+          <NavigationProperty Name="Krajnji_Primalac" Relationship="Self.FK_Dokument_Krajnji_Primalac" FromRole="Dokument" ToRole="Krajnji_Primalac" />
+          <NavigationProperty Name="Tip_Dokumenta1" Relationship="Self.FK_Dokument_Tip_Dokumenta" FromRole="Dokument" ToRole="Tip_Dokumenta" />
+          <NavigationProperty Name="Isporukas" Relationship="Self.FK_Isporuka_Dokument" FromRole="Dokument" ToRole="Isporuka" />
+          <NavigationProperty Name="Stavke_Dokumenta" Relationship="Self.FK_Stavke_Dokumenta_Dokument" FromRole="Dokument" ToRole="Stavke_Dokumenta" />
+          <NavigationProperty Name="Interni_Prenos" Relationship="VEMTESTModel.FK__Interni_P__dok_s__03F0984C" FromRole="Dokument" ToRole="Interni_Prenos" />
+        </EntityType>
+        <EntityType Name="Isporuka">
+          <Key>
+            <PropertyRef Name="isp_broj" />
+          </Key>
+          <Property Name="isp_broj" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pri_primalac" Type="Int32" />
+          <Property Name="isp_datum" Type="DateTime" Precision="0" />
+          <Property Name="dok_veza" Type="Int32" />
+          <Property Name="sts_status" Type="Int32" />
+          <NavigationProperty Name="Dokument" Relationship="Self.FK_Isporuka_Dokument" FromRole="Isporuka" ToRole="Dokument" />
+          <NavigationProperty Name="Krajnji_Primalac" Relationship="Self.FK_Isporuka_Krajnji_Primalac" FromRole="Isporuka" ToRole="Krajnji_Primalac" />
+          <NavigationProperty Name="Stavke_Isporuke" Relationship="Self.FK_Stavke_Isporuke_Isporuka" FromRole="Isporuka" ToRole="Stavke_Isporuke" />
+          <NavigationProperty Name="Stavke_Tovarnog_Lista" Relationship="Self.FK_Stavke_Tovarnog_Lista_Isporuka" FromRole="Isporuka" ToRole="Stavke_Tovarnog_Lista" />
+        </EntityType>
+        <EntityType Name="Jedinica_Mere">
+          <Key>
+            <PropertyRef Name="jed_sifra" />
+          </Key>
+          <Property Name="jed_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="jed_naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="jed_kratki_naziv" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Komitent">
+          <Key>
+            <PropertyRef Name="kom_sifra" />
+          </Key>
+          <Property Name="kom_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kom_naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kom_adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kom_grad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kom_ptt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kom_dobavljac" Type="Boolean" />
+          <Property Name="kom_aktivan" Type="Boolean" />
+          <Property Name="kom_PIB" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="kom_MBR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dokuments" Relationship="Self.FK_Dokument_Komitent" FromRole="Komitent" ToRole="Dokument" />
+        </EntityType>
+        <EntityType Name="Korisnik_Sistema">
+          <Key>
+            <PropertyRef Name="kor_sifra" />
+          </Key>
+          <Property Name="kor_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kor_ime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kor_prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kor_telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="kor_username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kor_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="atr_autorizacija" Type="Int32" Nullable="false" />
+          <Property Name="psl_poslovnica_rada" Type="Int32" />
+          <Property Name="VEM_WEB" Type="Boolean" />
+          <Property Name="VEM_GUI" Type="Boolean" />
+          <Property Name="VEM_MOBILE" Type="Boolean" />
+          <NavigationProperty Name="Autorizacija_Korisnika" Relationship="Self.FK_Korisnik_Sistema_Autorizacija_Korisnika" FromRole="Korisnik_Sistema" ToRole="Autorizacija_Korisnika" />
+          <NavigationProperty Name="Dokuments" Relationship="Self.FK_Dokument_Korisnik_Sistema" FromRole="Korisnik_Sistema" ToRole="Dokument" />
+          <NavigationProperty Name="Poslovnica" Relationship="Self.FK_Korisnik_Sistema_Poslovnica" FromRole="Korisnik_Sistema" ToRole="Poslovnica" />
+          <NavigationProperty Name="Vozacs" Relationship="Self.FK_Vozac_Korisnik_Sistema" FromRole="Korisnik_Sistema" ToRole="Vozac" />
+        </EntityType>
+        <EntityType Name="Krajnji_Primalac">
+          <Key>
+            <PropertyRef Name="pri_sifra" />
+          </Key>
+          <Property Name="pri_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pri_ime_prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pri_adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pri_adresa_broj" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="pri_grad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pri_ptt" Type="Int32" />
+          <Property Name="pri_telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pri_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dokuments" Relationship="Self.FK_Dokument_Krajnji_Primalac" FromRole="Krajnji_Primalac" ToRole="Dokument" />
+          <NavigationProperty Name="Isporukas" Relationship="Self.FK_Isporuka_Krajnji_Primalac" FromRole="Krajnji_Primalac" ToRole="Isporuka" />
+        </EntityType>
+        <EntityType Name="log_VEM">
+          <Key>
+            <PropertyRef Name="log_id" />
+          </Key>
+          <Property Name="log_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="log_function" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="log_date" Type="DateTime" Precision="0" />
+          <Property Name="log_time" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="log_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="log_isError" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Poslovnica">
+          <Key>
+            <PropertyRef Name="psl_sifra" />
+          </Key>
+          <Property Name="psl_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="psl_naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="psl_aktivna" Type="Boolean" />
+          <NavigationProperty Name="Korisnik_Sistema" Relationship="Self.FK_Korisnik_Sistema_Poslovnica" FromRole="Poslovnica" ToRole="Korisnik_Sistema" />
+          <NavigationProperty Name="Rafs" Relationship="Self.FK_Raf_Poslovnica" FromRole="Poslovnica" ToRole="Raf" />
+          <NavigationProperty Name="Zaliha_artikla" Relationship="Self.FK_Zaliha_artikla_Poslovnica" FromRole="Poslovnica" ToRole="Zaliha_artikla" />
+          <NavigationProperty Name="Interni_Prenos" Relationship="VEMTESTModel.FK__Interni_P__na_po__05D8E0BE" FromRole="Poslovnica" ToRole="Interni_Prenos" />
+          <NavigationProperty Name="Interni_Prenos1" Relationship="VEMTESTModel.FK__Interni_P__sa_po__04E4BC85" FromRole="Poslovnica" ToRole="Interni_Prenos" />
+        </EntityType>
+        <EntityType Name="Raf">
+          <Key>
+            <PropertyRef Name="raf_sifra" />
+          </Key>
+          <Property Name="raf_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="raf_lokacija" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="psl_poslovnica" Type="Int32" />
+          <NavigationProperty Name="Poslovnica" Relationship="Self.FK_Raf_Poslovnica" FromRole="Raf" ToRole="Poslovnica" />
+          <NavigationProperty Name="Zaliha_artikla" Relationship="Self.FK_Zaliha_artikla_Raf" FromRole="Raf" ToRole="Zaliha_artikla" />
+        </EntityType>
+        <EntityType Name="Status_Isporuke">
+          <Key>
+            <PropertyRef Name="sts_sifra" />
+          </Key>
+          <Property Name="sts_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sts_naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Stavke_Dokumenta">
+          <Key>
+            <PropertyRef Name="stv_id" />
+          </Key>
+          <Property Name="dok_broj_dokumenta" Type="Int32" />
+          <Property Name="stv_sifra_artikla" Type="Int32" />
+          <Property Name="stv_kolicina" Type="Int32" />
+          <Property Name="stv_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Artikal" Relationship="Self.FK_Stavke_Dokumenta_Artikal" FromRole="Stavke_Dokumenta" ToRole="Artikal" />
+          <NavigationProperty Name="Dokument" Relationship="Self.FK_Stavke_Dokumenta_Dokument" FromRole="Stavke_Dokumenta" ToRole="Dokument" />
+        </EntityType>
+        <EntityType Name="Stavke_Isporuke">
+          <Key>
+            <PropertyRef Name="stv_id" />
+          </Key>
+          <Property Name="art_sifra" Type="Int32" />
+          <Property Name="art_kolicina" Type="Int32" />
+          <Property Name="isp_broj" Type="Int32" />
+          <Property Name="stv_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Artikal" Relationship="Self.FK_Stavke_Isporuke_Artikal" FromRole="Stavke_Isporuke" ToRole="Artikal" />
+          <NavigationProperty Name="Isporuka" Relationship="Self.FK_Stavke_Isporuke_Isporuka" FromRole="Stavke_Isporuke" ToRole="Isporuka" />
+        </EntityType>
+        <EntityType Name="Stavke_Tovarnog_Lista">
+          <Key>
+            <PropertyRef Name="stv_id" />
+          </Key>
+          <Property Name="tl_broj" Type="Int32" />
+          <Property Name="isp_broj" Type="Int32" />
+          <Property Name="stv_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Isporuka" Relationship="Self.FK_Stavke_Tovarnog_Lista_Isporuka" FromRole="Stavke_Tovarnog_Lista" ToRole="Isporuka" />
+          <NavigationProperty Name="Tovarni_List" Relationship="Self.FK_Stavke_Tovarnog_Lista_Tovarni_List" FromRole="Stavke_Tovarnog_Lista" ToRole="Tovarni_List" />
+        </EntityType>
+        <EntityType Name="Tip_Dokumenta">
+          <Key>
+            <PropertyRef Name="tipdok_sifra" />
+          </Key>
+          <Property Name="tipdok_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipdok_kratki_naziv" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="tipdok_naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dokuments" Relationship="Self.FK_Dokument_Tip_Dokumenta" FromRole="Tip_Dokumenta" ToRole="Dokument" />
+        </EntityType>
+        <EntityType Name="Tovarni_List">
+          <Key>
+            <PropertyRef Name="tl_broj" />
+          </Key>
+          <Property Name="tl_broj" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tl_datum_kreiranja" Type="DateTime" Precision="0" />
+          <Property Name="vzc_vozac" Type="Int32" />
+          <Property Name="tl_zatvoren" Type="Boolean" />
+          <NavigationProperty Name="Stavke_Tovarnog_Lista" Relationship="Self.FK_Stavke_Tovarnog_Lista_Tovarni_List" FromRole="Tovarni_List" ToRole="Stavke_Tovarnog_Lista" />
+          <NavigationProperty Name="Vozac" Relationship="Self.FK_Tovarni_List_Vozac" FromRole="Tovarni_List" ToRole="Vozac" />
+        </EntityType>
+        <EntityType Name="Vozac">
+          <Key>
+            <PropertyRef Name="vzc_sifra" />
+          </Key>
+          <Property Name="vzc_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kor_sifra" Type="Int32" />
+          <Property Name="vzl_sifra" Type="Int32" />
+          <NavigationProperty Name="Korisnik_Sistema" Relationship="Self.FK_Vozac_Korisnik_Sistema" FromRole="Vozac" ToRole="Korisnik_Sistema" />
+          <NavigationProperty Name="Tovarni_List" Relationship="Self.FK_Tovarni_List_Vozac" FromRole="Vozac" ToRole="Tovarni_List" />
+          <NavigationProperty Name="Vozilo" Relationship="Self.FK_Vozac_Vozilo" FromRole="Vozac" ToRole="Vozilo" />
+        </EntityType>
+        <EntityType Name="Vozilo">
+          <Key>
+            <PropertyRef Name="vzl_sifra" />
+          </Key>
+          <Property Name="vzl_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vzl_marka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="vzl_model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vzl_registracija" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="vzl_slika" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vzl_aktivno" Type="Boolean" />
+          <NavigationProperty Name="Vozacs" Relationship="Self.FK_Vozac_Vozilo" FromRole="Vozilo" ToRole="Vozac" />
+        </EntityType>
+        <EntityType Name="Zaliha_artikla">
+          <Key>
+            <PropertyRef Name="zal_sifra" />
+          </Key>
+          <Property Name="zal_sifra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="art_sifra" Type="Int32" />
+          <Property Name="art_dostupna_kolicina" Type="Int32" />
+          <Property Name="art_rezervisana_kolicina" Type="Int32" />
+          <Property Name="psl_poslovnica" Type="Int32" />
+          <Property Name="raf_sifra" Type="Int32" />
+          <NavigationProperty Name="Artikal" Relationship="Self.FK_Zaliha_artikla_Artikal" FromRole="Zaliha_artikla" ToRole="Artikal" />
+          <NavigationProperty Name="Poslovnica" Relationship="Self.FK_Zaliha_artikla_Poslovnica" FromRole="Zaliha_artikla" ToRole="Poslovnica" />
+          <NavigationProperty Name="Raf" Relationship="Self.FK_Zaliha_artikla_Raf" FromRole="Zaliha_artikla" ToRole="Raf" />
+        </EntityType>
+        <Association Name="FK_Stavke_Dokumenta_Artikal">
+          <End Role="Artikal" Type="Self.Artikal" Multiplicity="0..1" />
+          <End Role="Stavke_Dokumenta" Type="Self.Stavke_Dokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikal">
+              <PropertyRef Name="art_sifra" />
+            </Principal>
+            <Dependent Role="Stavke_Dokumenta">
+              <PropertyRef Name="stv_sifra_artikla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Isporuke_Artikal">
+          <End Role="Artikal" Type="Self.Artikal" Multiplicity="0..1" />
+          <End Role="Stavke_Isporuke" Type="Self.Stavke_Isporuke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikal">
+              <PropertyRef Name="art_sifra" />
+            </Principal>
+            <Dependent Role="Stavke_Isporuke">
+              <PropertyRef Name="art_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaliha_artikla_Artikal">
+          <End Role="Artikal" Type="Self.Artikal" Multiplicity="0..1" />
+          <End Role="Zaliha_artikla" Type="Self.Zaliha_artikla" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikal">
+              <PropertyRef Name="art_sifra" />
+            </Principal>
+            <Dependent Role="Zaliha_artikla">
+              <PropertyRef Name="art_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Korisnik_Sistema_Autorizacija_Korisnika">
+          <End Role="Autorizacija_Korisnika" Type="Self.Autorizacija_Korisnika" Multiplicity="1" />
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autorizacija_Korisnika">
+              <PropertyRef Name="atr_sifra" />
+            </Principal>
+            <Dependent Role="Korisnik_Sistema">
+              <PropertyRef Name="atr_autorizacija" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Komitent">
+          <End Role="Komitent" Type="Self.Komitent" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Komitent">
+              <PropertyRef Name="kom_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="kom_komitent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Korisnik_Sistema">
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik_Sistema">
+              <PropertyRef Name="kor_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="dok_korisnik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Krajnji_Primalac">
+          <End Role="Krajnji_Primalac" Type="Self.Krajnji_Primalac" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Krajnji_Primalac">
+              <PropertyRef Name="pri_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="pri_primalac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dokument_Tip_Dokumenta">
+          <End Role="Tip_Dokumenta" Type="Self.Tip_Dokumenta" Multiplicity="0..1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tip_Dokumenta">
+              <PropertyRef Name="tipdok_sifra" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="tip_dokumenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Isporuka_Dokument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="0..1" />
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="dok_sifra_dokumenta" />
+            </Principal>
+            <Dependent Role="Isporuka">
+              <PropertyRef Name="dok_veza" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Dokumenta_Dokument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="0..1" />
+          <End Role="Stavke_Dokumenta" Type="Self.Stavke_Dokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="dok_sifra_dokumenta" />
+            </Principal>
+            <Dependent Role="Stavke_Dokumenta">
+              <PropertyRef Name="dok_broj_dokumenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Isporuka_Krajnji_Primalac">
+          <End Role="Krajnji_Primalac" Type="Self.Krajnji_Primalac" Multiplicity="0..1" />
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Krajnji_Primalac">
+              <PropertyRef Name="pri_sifra" />
+            </Principal>
+            <Dependent Role="Isporuka">
+              <PropertyRef Name="pri_primalac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Isporuke_Isporuka">
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="0..1" />
+          <End Role="Stavke_Isporuke" Type="Self.Stavke_Isporuke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Isporuka">
+              <PropertyRef Name="isp_broj" />
+            </Principal>
+            <Dependent Role="Stavke_Isporuke">
+              <PropertyRef Name="isp_broj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Tovarnog_Lista_Isporuka">
+          <End Role="Isporuka" Type="Self.Isporuka" Multiplicity="0..1" />
+          <End Role="Stavke_Tovarnog_Lista" Type="Self.Stavke_Tovarnog_Lista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Isporuka">
+              <PropertyRef Name="isp_broj" />
+            </Principal>
+            <Dependent Role="Stavke_Tovarnog_Lista">
+              <PropertyRef Name="isp_broj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Korisnik_Sistema_Poslovnica">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="0..1" />
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Korisnik_Sistema">
+              <PropertyRef Name="psl_poslovnica_rada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vozac_Korisnik_Sistema">
+          <End Role="Korisnik_Sistema" Type="Self.Korisnik_Sistema" Multiplicity="0..1" />
+          <End Role="Vozac" Type="Self.Vozac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik_Sistema">
+              <PropertyRef Name="kor_sifra" />
+            </Principal>
+            <Dependent Role="Vozac">
+              <PropertyRef Name="kor_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Raf_Poslovnica">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="0..1" />
+          <End Role="Raf" Type="Self.Raf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Raf">
+              <PropertyRef Name="psl_poslovnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaliha_artikla_Poslovnica">
+          <End Role="Poslovnica" Type="Self.Poslovnica" Multiplicity="0..1" />
+          <End Role="Zaliha_artikla" Type="Self.Zaliha_artikla" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Zaliha_artikla">
+              <PropertyRef Name="psl_poslovnica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaliha_artikla_Raf">
+          <End Role="Raf" Type="Self.Raf" Multiplicity="0..1" />
+          <End Role="Zaliha_artikla" Type="Self.Zaliha_artikla" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Raf">
+              <PropertyRef Name="raf_sifra" />
+            </Principal>
+            <Dependent Role="Zaliha_artikla">
+              <PropertyRef Name="raf_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stavke_Tovarnog_Lista_Tovarni_List">
+          <End Role="Tovarni_List" Type="Self.Tovarni_List" Multiplicity="0..1" />
+          <End Role="Stavke_Tovarnog_Lista" Type="Self.Stavke_Tovarnog_Lista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tovarni_List">
+              <PropertyRef Name="tl_broj" />
+            </Principal>
+            <Dependent Role="Stavke_Tovarnog_Lista">
+              <PropertyRef Name="tl_broj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tovarni_List_Vozac">
+          <End Role="Vozac" Type="Self.Vozac" Multiplicity="0..1" />
+          <End Role="Tovarni_List" Type="Self.Tovarni_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vozac">
+              <PropertyRef Name="vzc_sifra" />
+            </Principal>
+            <Dependent Role="Tovarni_List">
+              <PropertyRef Name="vzc_vozac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vozac_Vozilo">
+          <End Role="Vozilo" Type="Self.Vozilo" Multiplicity="0..1" />
+          <End Role="Vozac" Type="Self.Vozac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vozilo">
+              <PropertyRef Name="vzl_sifra" />
+            </Principal>
+            <Dependent Role="Vozac">
+              <PropertyRef Name="vzl_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VEMTESTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adresars" EntityType="Self.Adresar" />
+          <EntitySet Name="Api_Pristup" EntityType="Self.Api_Pristup" />
+          <EntitySet Name="Artikals" EntityType="Self.Artikal" />
+          <EntitySet Name="Autorizacija_Korisnika" EntityType="Self.Autorizacija_Korisnika" />
+          <EntitySet Name="Dokuments" EntityType="Self.Dokument" />
+          <EntitySet Name="Isporukas" EntityType="Self.Isporuka" />
+          <EntitySet Name="Jedinica_Mere" EntityType="Self.Jedinica_Mere" />
+          <EntitySet Name="Komitents" EntityType="Self.Komitent" />
+          <EntitySet Name="Korisnik_Sistema" EntityType="Self.Korisnik_Sistema" />
+          <EntitySet Name="Krajnji_Primalac" EntityType="Self.Krajnji_Primalac" />
+          <EntitySet Name="log_VEM" EntityType="Self.log_VEM" />
+          <EntitySet Name="Poslovnicas" EntityType="Self.Poslovnica" />
+          <EntitySet Name="Rafs" EntityType="Self.Raf" />
+          <EntitySet Name="Status_Isporuke" EntityType="Self.Status_Isporuke" />
+          <EntitySet Name="Stavke_Dokumenta" EntityType="Self.Stavke_Dokumenta" />
+          <EntitySet Name="Stavke_Isporuke" EntityType="Self.Stavke_Isporuke" />
+          <EntitySet Name="Stavke_Tovarnog_Lista" EntityType="Self.Stavke_Tovarnog_Lista" />
+          <EntitySet Name="Tip_Dokumenta" EntityType="Self.Tip_Dokumenta" />
+          <EntitySet Name="Tovarni_List" EntityType="Self.Tovarni_List" />
+          <EntitySet Name="Vozacs" EntityType="Self.Vozac" />
+          <EntitySet Name="Voziloes" EntityType="Self.Vozilo" />
+          <EntitySet Name="Zaliha_artikla" EntityType="Self.Zaliha_artikla" />
+          <AssociationSet Name="FK_Stavke_Dokumenta_Artikal" Association="Self.FK_Stavke_Dokumenta_Artikal">
+            <End Role="Artikal" EntitySet="Artikals" />
+            <End Role="Stavke_Dokumenta" EntitySet="Stavke_Dokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Isporuke_Artikal" Association="Self.FK_Stavke_Isporuke_Artikal">
+            <End Role="Artikal" EntitySet="Artikals" />
+            <End Role="Stavke_Isporuke" EntitySet="Stavke_Isporuke" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaliha_artikla_Artikal" Association="Self.FK_Zaliha_artikla_Artikal">
+            <End Role="Artikal" EntitySet="Artikals" />
+            <End Role="Zaliha_artikla" EntitySet="Zaliha_artikla" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Korisnik_Sistema_Autorizacija_Korisnika" Association="Self.FK_Korisnik_Sistema_Autorizacija_Korisnika">
+            <End Role="Autorizacija_Korisnika" EntitySet="Autorizacija_Korisnika" />
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Komitent" Association="Self.FK_Dokument_Komitent">
+            <End Role="Komitent" EntitySet="Komitents" />
+            <End Role="Dokument" EntitySet="Dokuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Korisnik_Sistema" Association="Self.FK_Dokument_Korisnik_Sistema">
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+            <End Role="Dokument" EntitySet="Dokuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Krajnji_Primalac" Association="Self.FK_Dokument_Krajnji_Primalac">
+            <End Role="Krajnji_Primalac" EntitySet="Krajnji_Primalac" />
+            <End Role="Dokument" EntitySet="Dokuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dokument_Tip_Dokumenta" Association="Self.FK_Dokument_Tip_Dokumenta">
+            <End Role="Tip_Dokumenta" EntitySet="Tip_Dokumenta" />
+            <End Role="Dokument" EntitySet="Dokuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Isporuka_Dokument" Association="Self.FK_Isporuka_Dokument">
+            <End Role="Dokument" EntitySet="Dokuments" />
+            <End Role="Isporuka" EntitySet="Isporukas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Dokumenta_Dokument" Association="Self.FK_Stavke_Dokumenta_Dokument">
+            <End Role="Dokument" EntitySet="Dokuments" />
+            <End Role="Stavke_Dokumenta" EntitySet="Stavke_Dokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Isporuka_Krajnji_Primalac" Association="Self.FK_Isporuka_Krajnji_Primalac">
+            <End Role="Krajnji_Primalac" EntitySet="Krajnji_Primalac" />
+            <End Role="Isporuka" EntitySet="Isporukas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Isporuke_Isporuka" Association="Self.FK_Stavke_Isporuke_Isporuka">
+            <End Role="Isporuka" EntitySet="Isporukas" />
+            <End Role="Stavke_Isporuke" EntitySet="Stavke_Isporuke" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Tovarnog_Lista_Isporuka" Association="Self.FK_Stavke_Tovarnog_Lista_Isporuka">
+            <End Role="Isporuka" EntitySet="Isporukas" />
+            <End Role="Stavke_Tovarnog_Lista" EntitySet="Stavke_Tovarnog_Lista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Korisnik_Sistema_Poslovnica" Association="Self.FK_Korisnik_Sistema_Poslovnica">
+            <End Role="Poslovnica" EntitySet="Poslovnicas" />
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vozac_Korisnik_Sistema" Association="Self.FK_Vozac_Korisnik_Sistema">
+            <End Role="Korisnik_Sistema" EntitySet="Korisnik_Sistema" />
+            <End Role="Vozac" EntitySet="Vozacs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Raf_Poslovnica" Association="Self.FK_Raf_Poslovnica">
+            <End Role="Poslovnica" EntitySet="Poslovnicas" />
+            <End Role="Raf" EntitySet="Rafs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaliha_artikla_Poslovnica" Association="Self.FK_Zaliha_artikla_Poslovnica">
+            <End Role="Poslovnica" EntitySet="Poslovnicas" />
+            <End Role="Zaliha_artikla" EntitySet="Zaliha_artikla" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaliha_artikla_Raf" Association="Self.FK_Zaliha_artikla_Raf">
+            <End Role="Raf" EntitySet="Rafs" />
+            <End Role="Zaliha_artikla" EntitySet="Zaliha_artikla" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stavke_Tovarnog_Lista_Tovarni_List" Association="Self.FK_Stavke_Tovarnog_Lista_Tovarni_List">
+            <End Role="Tovarni_List" EntitySet="Tovarni_List" />
+            <End Role="Stavke_Tovarnog_Lista" EntitySet="Stavke_Tovarnog_Lista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tovarni_List_Vozac" Association="Self.FK_Tovarni_List_Vozac">
+            <End Role="Vozac" EntitySet="Vozacs" />
+            <End Role="Tovarni_List" EntitySet="Tovarni_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vozac_Vozilo" Association="Self.FK_Vozac_Vozilo">
+            <End Role="Vozilo" EntitySet="Voziloes" />
+            <End Role="Vozac" EntitySet="Vozacs" />
+          </AssociationSet>
+          <FunctionImport Name="usp_Svi_Artikli_Na_Poslovnicu">
+          <Parameter Name="sifraPoslovnice" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Unos_Artikla_Na_Zalihu">
+          <Parameter Name="prm_art_sifra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_UpisVezaBroj">
+          <Parameter Name="BrojDokumenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ZatvaranjeDokumenata">
+            <Parameter Name="VezaDokumenta" Mode="In" Type="Int32" />
+            <Parameter Name="TipDokumenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Interni_Prenos" EntityType="VEMTESTModel.Interni_Prenos" />
+          <AssociationSet Name="FK__Interni_P__dok_s__03F0984C" Association="VEMTESTModel.FK__Interni_P__dok_s__03F0984C">
+            <End Role="Dokument" EntitySet="Dokuments" />
+            <End Role="Interni_Prenos" EntitySet="Interni_Prenos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interni_P__na_po__05D8E0BE" Association="VEMTESTModel.FK__Interni_P__na_po__05D8E0BE">
+            <End Role="Poslovnica" EntitySet="Poslovnicas" />
+            <End Role="Interni_Prenos" EntitySet="Interni_Prenos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Interni_P__sa_po__04E4BC85" Association="VEMTESTModel.FK__Interni_P__sa_po__04E4BC85">
+            <End Role="Poslovnica" EntitySet="Poslovnicas" />
+            <End Role="Interni_Prenos" EntitySet="Interni_Prenos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Interni_Prenos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="dok_sifra" Type="Int32" Nullable="false" />
+          <Property Name="sa_poslovnice" Type="Int32" Nullable="false" />
+          <Property Name="na_poslovnicu" Type="Int32" Nullable="false" />
+          <Property Name="datum_kreiranja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Dokument" Relationship="VEMTESTModel.FK__Interni_P__dok_s__03F0984C" FromRole="Interni_Prenos" ToRole="Dokument" />
+          <NavigationProperty Name="Poslovnica" Relationship="VEMTESTModel.FK__Interni_P__na_po__05D8E0BE" FromRole="Interni_Prenos" ToRole="Poslovnica" />
+          <NavigationProperty Name="Poslovnica1" Relationship="VEMTESTModel.FK__Interni_P__sa_po__04E4BC85" FromRole="Interni_Prenos" ToRole="Poslovnica" />
+        </EntityType>
+        <Association Name="FK__Interni_P__dok_s__03F0984C">
+          <End Type="VEMTESTModel.Dokument" Role="Dokument" Multiplicity="1" />
+          <End Type="VEMTESTModel.Interni_Prenos" Role="Interni_Prenos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="dok_sifra_dokumenta" />
+            </Principal>
+            <Dependent Role="Interni_Prenos">
+              <PropertyRef Name="dok_sifra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interni_P__na_po__05D8E0BE">
+          <End Type="VEMTESTModel.Poslovnica" Role="Poslovnica" Multiplicity="1" />
+          <End Type="VEMTESTModel.Interni_Prenos" Role="Interni_Prenos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Interni_Prenos">
+              <PropertyRef Name="na_poslovnicu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Interni_P__sa_po__04E4BC85">
+          <End Type="VEMTESTModel.Poslovnica" Role="Poslovnica" Multiplicity="1" />
+          <End Type="VEMTESTModel.Interni_Prenos" Role="Interni_Prenos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poslovnica">
+              <PropertyRef Name="psl_sifra" />
+            </Principal>
+            <Dependent Role="Interni_Prenos">
+              <PropertyRef Name="sa_poslovnice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VEMTESTModelStoreContainer" CdmEntityContainer="VEMTESTEntities">
+          <EntitySetMapping Name="Adresars">
+            <EntityTypeMapping TypeName="VEMTESTModel.Adresar">
+              <MappingFragment StoreEntitySet="Adresar">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="adresa" ColumnName="adresa" />
+                <ScalarProperty Name="grad" ColumnName="grad" />
+                <ScalarProperty Name="opstina" ColumnName="opstina" />
+                <ScalarProperty Name="ptt" ColumnName="ptt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Api_Pristup">
+            <EntityTypeMapping TypeName="VEMTESTModel.Api_Pristup">
+              <MappingFragment StoreEntitySet="Api_Pristup">
+                <ScalarProperty Name="api_sifra_korisnika" ColumnName="api_sifra_korisnika" />
+                <ScalarProperty Name="api_naziv_korisnika" ColumnName="api_naziv_korisnika" />
+                <ScalarProperty Name="api_username_korisnika" ColumnName="api_username_korisnika" />
+                <ScalarProperty Name="api_lozinka_korisnika" ColumnName="api_lozinka_korisnika" />
+                <ScalarProperty Name="rest_api" ColumnName="rest_api" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artikals">
+            <EntityTypeMapping TypeName="VEMTESTModel.Artikal">
+              <MappingFragment StoreEntitySet="Artikal">
+                <ScalarProperty Name="art_sifra" ColumnName="art_sifra" />
+                <ScalarProperty Name="art_naziv" ColumnName="art_naziv" />
+                <ScalarProperty Name="art_proizvodjac" ColumnName="art_proizvodjac" />
+                <ScalarProperty Name="art_ean" ColumnName="art_ean" />
+                <ScalarProperty Name="art_jedinica_mere" ColumnName="art_jedinica_mere" />
+                <ScalarProperty Name="kom_dobavljac" ColumnName="kom_dobavljac" />
+                <ScalarProperty Name="art_tip" ColumnName="art_tip" />
+                <ScalarProperty Name="art_aktivan" ColumnName="art_aktivan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Autorizacija_Korisnika">
+            <EntityTypeMapping TypeName="VEMTESTModel.Autorizacija_Korisnika">
+              <MappingFragment StoreEntitySet="Autorizacija_Korisnika">
+                <ScalarProperty Name="atr_sifra" ColumnName="atr_sifra" />
+                <ScalarProperty Name="atr_naziv" ColumnName="atr_naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dokuments">
+            <EntityTypeMapping TypeName="VEMTESTModel.Dokument">
+              <MappingFragment StoreEntitySet="Dokument">
+                <ScalarProperty Name="dok_sifra_dokumenta" ColumnName="dok_sifra_dokumenta" />
+                <ScalarProperty Name="tip_dokumenta" ColumnName="tip_dokumenta" />
+                <ScalarProperty Name="dok_datum_kreiranja" ColumnName="dok_datum_kreiranja" />
+                <ScalarProperty Name="dok_korisnik" ColumnName="dok_korisnik" />
+                <ScalarProperty Name="kom_komitent" ColumnName="kom_komitent" />
+                <ScalarProperty Name="dok_veza" ColumnName="dok_veza" />
+                <ScalarProperty Name="pri_primalac" ColumnName="pri_primalac" />
+                <ScalarProperty Name="psl_sifra_poslovnice" ColumnName="psl_sifra_poslovnice" />
+                <ScalarProperty Name="dok_datum_isporuke" ColumnName="dok_datum_isporuke" />
+                <ScalarProperty Name="dok_napomena" ColumnName="dok_napomena" />
+                <ScalarProperty Name="dok_broj_dokumenta" ColumnName="dok_broj_dokumenta" />
+                <ScalarProperty Name="dok_otvoren" ColumnName="dok_otvoren" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Isporukas">
+            <EntityTypeMapping TypeName="VEMTESTModel.Isporuka">
+              <MappingFragment StoreEntitySet="Isporuka">
+                <ScalarProperty Name="isp_broj" ColumnName="isp_broj" />
+                <ScalarProperty Name="pri_primalac" ColumnName="pri_primalac" />
+                <ScalarProperty Name="isp_datum" ColumnName="isp_datum" />
+                <ScalarProperty Name="dok_veza" ColumnName="dok_veza" />
+                <ScalarProperty Name="sts_status" ColumnName="sts_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jedinica_Mere">
+            <EntityTypeMapping TypeName="VEMTESTModel.Jedinica_Mere">
+              <MappingFragment StoreEntitySet="Jedinica_Mere">
+                <ScalarProperty Name="jed_sifra" ColumnName="jed_sifra" />
+                <ScalarProperty Name="jed_naziv" ColumnName="jed_naziv" />
+                <ScalarProperty Name="jed_kratki_naziv" ColumnName="jed_kratki_naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Komitents">
+            <EntityTypeMapping TypeName="VEMTESTModel.Komitent">
+              <MappingFragment StoreEntitySet="Komitent">
+                <ScalarProperty Name="kom_sifra" ColumnName="kom_sifra" />
+                <ScalarProperty Name="kom_naziv" ColumnName="kom_naziv" />
+                <ScalarProperty Name="kom_adresa" ColumnName="kom_adresa" />
+                <ScalarProperty Name="kom_grad" ColumnName="kom_grad" />
+                <ScalarProperty Name="kom_ptt" ColumnName="kom_ptt" />
+                <ScalarProperty Name="kom_dobavljac" ColumnName="kom_dobavljac" />
+                <ScalarProperty Name="kom_aktivan" ColumnName="kom_aktivan" />
+                <ScalarProperty Name="kom_PIB" ColumnName="kom_PIB" />
+                <ScalarProperty Name="kom_MBR" ColumnName="kom_MBR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisnik_Sistema">
+            <EntityTypeMapping TypeName="VEMTESTModel.Korisnik_Sistema">
+              <MappingFragment StoreEntitySet="Korisnik_Sistema">
+                <ScalarProperty Name="kor_sifra" ColumnName="kor_sifra" />
+                <ScalarProperty Name="kor_ime" ColumnName="kor_ime" />
+                <ScalarProperty Name="kor_prezime" ColumnName="kor_prezime" />
+                <ScalarProperty Name="kor_telefon" ColumnName="kor_telefon" />
+                <ScalarProperty Name="kor_username" ColumnName="kor_username" />
+                <ScalarProperty Name="kor_password" ColumnName="kor_password" />
+                <ScalarProperty Name="atr_autorizacija" ColumnName="atr_autorizacija" />
+                <ScalarProperty Name="psl_poslovnica_rada" ColumnName="psl_poslovnica_rada" />
+                <ScalarProperty Name="VEM_WEB" ColumnName="VEM_WEB" />
+                <ScalarProperty Name="VEM_GUI" ColumnName="VEM_GUI" />
+                <ScalarProperty Name="VEM_MOBILE" ColumnName="VEM_MOBILE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Krajnji_Primalac">
+            <EntityTypeMapping TypeName="VEMTESTModel.Krajnji_Primalac">
+              <MappingFragment StoreEntitySet="Krajnji_Primalac">
+                <ScalarProperty Name="pri_sifra" ColumnName="pri_sifra" />
+                <ScalarProperty Name="pri_ime_prezime" ColumnName="pri_ime_prezime" />
+                <ScalarProperty Name="pri_adresa" ColumnName="pri_adresa" />
+                <ScalarProperty Name="pri_adresa_broj" ColumnName="pri_adresa_broj" />
+                <ScalarProperty Name="pri_grad" ColumnName="pri_grad" />
+                <ScalarProperty Name="pri_ptt" ColumnName="pri_ptt" />
+                <ScalarProperty Name="pri_telefon" ColumnName="pri_telefon" />
+                <ScalarProperty Name="pri_email" ColumnName="pri_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_VEM">
+            <EntityTypeMapping TypeName="VEMTESTModel.log_VEM">
+              <MappingFragment StoreEntitySet="log_VEM">
+                <ScalarProperty Name="log_id" ColumnName="log_id" />
+                <ScalarProperty Name="log_function" ColumnName="log_function" />
+                <ScalarProperty Name="log_date" ColumnName="log_date" />
+                <ScalarProperty Name="log_time" ColumnName="log_time" />
+                <ScalarProperty Name="log_message" ColumnName="log_message" />
+                <ScalarProperty Name="log_isError" ColumnName="log_isError" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Poslovnicas">
+            <EntityTypeMapping TypeName="VEMTESTModel.Poslovnica">
+              <MappingFragment StoreEntitySet="Poslovnica">
+                <ScalarProperty Name="psl_sifra" ColumnName="psl_sifra" />
+                <ScalarProperty Name="psl_naziv" ColumnName="psl_naziv" />
+                <ScalarProperty Name="psl_aktivna" ColumnName="psl_aktivna" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rafs">
+            <EntityTypeMapping TypeName="VEMTESTModel.Raf">
+              <MappingFragment StoreEntitySet="Raf">
+                <ScalarProperty Name="raf_sifra" ColumnName="raf_sifra" />
+                <ScalarProperty Name="raf_lokacija" ColumnName="raf_lokacija" />
+                <ScalarProperty Name="psl_poslovnica" ColumnName="psl_poslovnica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status_Isporuke">
+            <EntityTypeMapping TypeName="VEMTESTModel.Status_Isporuke">
+              <MappingFragment StoreEntitySet="Status_Isporuke">
+                <ScalarProperty Name="sts_sifra" ColumnName="sts_sifra" />
+                <ScalarProperty Name="sts_naziv" ColumnName="sts_naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stavke_Dokumenta">
+            <EntityTypeMapping TypeName="VEMTESTModel.Stavke_Dokumenta">
+              <MappingFragment StoreEntitySet="Stavke_Dokumenta">
+                <ScalarProperty Name="dok_broj_dokumenta" ColumnName="dok_broj_dokumenta" />
+                <ScalarProperty Name="stv_sifra_artikla" ColumnName="stv_sifra_artikla" />
+                <ScalarProperty Name="stv_kolicina" ColumnName="stv_kolicina" />
+                <ScalarProperty Name="stv_id" ColumnName="stv_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stavke_Isporuke">
+            <EntityTypeMapping TypeName="VEMTESTModel.Stavke_Isporuke">
+              <MappingFragment StoreEntitySet="Stavke_Isporuke">
+                <ScalarProperty Name="art_sifra" ColumnName="art_sifra" />
+                <ScalarProperty Name="art_kolicina" ColumnName="art_kolicina" />
+                <ScalarProperty Name="isp_broj" ColumnName="isp_broj" />
+                <ScalarProperty Name="stv_id" ColumnName="stv_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stavke_Tovarnog_Lista">
+            <EntityTypeMapping TypeName="VEMTESTModel.Stavke_Tovarnog_Lista">
+              <MappingFragment StoreEntitySet="Stavke_Tovarnog_Lista">
+                <ScalarProperty Name="tl_broj" ColumnName="tl_broj" />
+                <ScalarProperty Name="isp_broj" ColumnName="isp_broj" />
+                <ScalarProperty Name="stv_id" ColumnName="stv_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tip_Dokumenta">
+            <EntityTypeMapping TypeName="VEMTESTModel.Tip_Dokumenta">
+              <MappingFragment StoreEntitySet="Tip_Dokumenta">
+                <ScalarProperty Name="tipdok_sifra" ColumnName="tipdok_sifra" />
+                <ScalarProperty Name="tipdok_kratki_naziv" ColumnName="tipdok_kratki_naziv" />
+                <ScalarProperty Name="tipdok_naziv" ColumnName="tipdok_naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tovarni_List">
+            <EntityTypeMapping TypeName="VEMTESTModel.Tovarni_List">
+              <MappingFragment StoreEntitySet="Tovarni_List">
+                <ScalarProperty Name="tl_broj" ColumnName="tl_broj" />
+                <ScalarProperty Name="tl_datum_kreiranja" ColumnName="tl_datum_kreiranja" />
+                <ScalarProperty Name="vzc_vozac" ColumnName="vzc_vozac" />
+                <ScalarProperty Name="tl_zatvoren" ColumnName="tl_zatvoren" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vozacs">
+            <EntityTypeMapping TypeName="VEMTESTModel.Vozac">
+              <MappingFragment StoreEntitySet="Vozac">
+                <ScalarProperty Name="vzc_sifra" ColumnName="vzc_sifra" />
+                <ScalarProperty Name="kor_sifra" ColumnName="kor_sifra" />
+                <ScalarProperty Name="vzl_sifra" ColumnName="vzl_sifra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voziloes">
+            <EntityTypeMapping TypeName="VEMTESTModel.Vozilo">
+              <MappingFragment StoreEntitySet="Vozilo">
+                <ScalarProperty Name="vzl_sifra" ColumnName="vzl_sifra" />
+                <ScalarProperty Name="vzl_marka" ColumnName="vzl_marka" />
+                <ScalarProperty Name="vzl_model" ColumnName="vzl_model" />
+                <ScalarProperty Name="vzl_registracija" ColumnName="vzl_registracija" />
+                <ScalarProperty Name="vzl_slika" ColumnName="vzl_slika" />
+                <ScalarProperty Name="vzl_aktivno" ColumnName="vzl_aktivno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zaliha_artikla">
+            <EntityTypeMapping TypeName="VEMTESTModel.Zaliha_artikla">
+              <MappingFragment StoreEntitySet="Zaliha_artikla">
+                <ScalarProperty Name="zal_sifra" ColumnName="zal_sifra" />
+                <ScalarProperty Name="art_sifra" ColumnName="art_sifra" />
+                <ScalarProperty Name="art_dostupna_kolicina" ColumnName="art_dostupna_kolicina" />
+                <ScalarProperty Name="art_rezervisana_kolicina" ColumnName="art_rezervisana_kolicina" />
+                <ScalarProperty Name="psl_poslovnica" ColumnName="psl_poslovnica" />
+                <ScalarProperty Name="raf_sifra" ColumnName="raf_sifra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_Svi_Artikli_Na_Poslovnicu" FunctionName="VEMTESTModel.Store.usp_Svi_Artikli_Na_Poslovnicu" />
+          <FunctionImportMapping FunctionImportName="usp_Unos_Artikla_Na_Zalihu" FunctionName="VEMTESTModel.Store.usp_Unos_Artikla_Na_Zalihu" />
+          <FunctionImportMapping FunctionImportName="usp_UpisVezaBroj" FunctionName="VEMTESTModel.Store.usp_UpisVezaBroj" />
+          <FunctionImportMapping FunctionImportName="usp_ZatvaranjeDokumenata" FunctionName="VEMTESTModel.Store.usp_ZatvaranjeDokumenata" />
+          <EntitySetMapping Name="Interni_Prenos">
+            <EntityTypeMapping TypeName="VEMTESTModel.Interni_Prenos">
+              <MappingFragment StoreEntitySet="Interni_Prenos">
+                <ScalarProperty Name="datum_kreiranja" ColumnName="datum_kreiranja" />
+                <ScalarProperty Name="na_poslovnicu" ColumnName="na_poslovnicu" />
+                <ScalarProperty Name="sa_poslovnice" ColumnName="sa_poslovnice" />
+                <ScalarProperty Name="dok_sifra" ColumnName="dok_sifra" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
