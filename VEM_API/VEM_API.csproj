@@ -298,7 +298,7 @@
     <Compile Include="LogProvider\LogVEM.cs" />
     <Compile Include="Models\AdresarDTO.cs" />
     <Compile Include="Models\AnalitikaDTO.cs" />
-    <Compile Include="Models\LInterniPrenos.cs" />
+    <Compile Include="Models\InterniPrenosDTO.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\BasicAuthenticationAttribute.cs" />

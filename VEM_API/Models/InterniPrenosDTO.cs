@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VEM_API.Models
 {
-    public class LInterniPrenos
+    public class InterniPrenosDTO
     {
         public int Id { get; set; }
         public int dokument { get; set; }

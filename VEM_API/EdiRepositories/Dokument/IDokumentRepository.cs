@@ -15,7 +15,7 @@ namespace VEM_API.EdiRepositories
         /// Kolekcija tipova dokumenata
         /// </summary>
         /// <returns></returns>
-        IEnumerable<LTipDokumenta> GetAllTipDokumenta();
+        IEnumerable<TipDokumentaDTO> GetAllTipDokumenta();
         #endregion "Tip dokumenta"
 
         #region "Dokumenti"
@@ -23,27 +23,27 @@ namespace VEM_API.EdiRepositories
         /// Kolekcija svih dokumenata
         /// </summary>
         /// <returns></returns>
-        IEnumerable<LDokument> GetAllDokument();
+        IEnumerable<DokumentDTO> GetAllDokument();
 
         /// <summary>
         /// Kolekcija dokumenata pod kriterijumom parametra
         /// </summary>
         /// <param name="parametar">Sifra ili broj dokumenta</param>
         /// <returns></returns>
-        IEnumerable<LDokument> GetDokumentById(string parametar);
+        IEnumerable<DokumentDTO> GetDokumentById(string parametar);
 
         /// <summary>
         /// Kolekcija svih potvrdjenih dokumenata
         /// </summary>
         /// <returns></returns>
-        IEnumerable<LDokument> GetAllPotvrdjenDokument();
+        IEnumerable<DokumentDTO> GetAllPotvrdjenDokument();
 
         /// <summary>
         /// Kolekcija potvrdjenih dokumenata pod kriterijumom parametra
         /// </summary>
         /// <param name="parametar">Sifra ili broj dokumenta</param>
         /// <returns></returns>
-        IEnumerable<LDokument> GetPotvrdjeniDokumentById(string parametar);
+        IEnumerable<DokumentDTO> GetPotvrdjeniDokumentById(string parametar);
 
         /// <summary>
         /// Unos req dokumenta
@@ -51,7 +51,7 @@ namespace VEM_API.EdiRepositories
         /// <param name="dokument"></param>
         /// <param name="na_poslovnicu"></param>
         /// <returns></returns>
-        bool CreateRequestDocument(LDokument dokument, int? na_poslovnicu);
+        bool CreateRequestDocument(DokumentDTO dokument, int? na_poslovnicu);
 
         /// <summary>
         /// Unos resp dokumenta
@@ -87,7 +87,7 @@ namespace VEM_API.EdiRepositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IEnumerable<LDokument> GetAllVezniDokumenti(int id);
+        IEnumerable<DokumentDTO> GetAllVezniDokumenti(int id);
 
         /// <summary>
         /// Zatvaranje dokumenta
@@ -103,14 +103,14 @@ namespace VEM_API.EdiRepositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IEnumerable<LStavkeDokumenta> GetAllStavkeDokument(int id);
+        IEnumerable<StavkeDokumentaDTO> GetAllStavkeDokument(int id);
 
         /// <summary>
         /// Kreiranje nove stavke dokumenta
         /// </summary>
         /// <param name="stavka"></param>
         /// <returns></returns>
-        bool CreateNewStavkaDokumenta(LStavkeDokumenta stavka);
+        bool CreateNewStavkaDokumenta(StavkeDokumentaDTO stavka);
 
         /// <summary>
         /// Brisanje stavke sa dokumenta
@@ -142,7 +142,7 @@ namespace VEM_API.EdiRepositories
         /// <param name="kolicina"></param>
         /// <param name="broj_dokumenta"></param>
         /// <returns></returns>
-        bool CheckDostupnaKolicina(int sifra_artikla, int kolicina, int broj_dokumenta);
+        bool CheckDostupnaKolicina(int sifra_artikla, int? kolicina, int? broj_dokumenta);
         #endregion "Stavke dokumenata"
 
         #region "Manipulacija zalihom"
@@ -167,7 +167,7 @@ namespace VEM_API.EdiRepositories
         /// Kolekcija otvorenih internih prenosa
         /// </summary>
         /// <returns></returns>
-        IEnumerable<LInterniPrenos> GetAllOtvoreniPrenos();
+        IEnumerable<InterniPrenosDTO> GetAllOtvoreniPrenos();
 
         /// <summary>
         /// Kreira novu internu otpremnicu

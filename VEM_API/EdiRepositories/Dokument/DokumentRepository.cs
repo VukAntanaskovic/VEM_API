@@ -603,7 +603,7 @@ namespace VEM_API.EdiRepositories
                       select d;
             if (dok.Count() == 1)
             {
-                List<LStavkeDokumenta> stavke = new List<LStavkeDokumenta>();
+                List<StavkeDokumentaDTO> stavke = new List<StavkeDokumentaDTO>();
                 var d = dok.FirstOrDefault();
                 d.dok_otvoren = false;
                 foreach (var stv in db.Stavke_Dokumenta.Where(x => x.dok_broj_dokumenta == id))
@@ -673,7 +673,7 @@ namespace VEM_API.EdiRepositories
             return result;
         }
 
-        public bool CreateNewStavkaDokumenta(LStavkeDokumenta stavka)
+        public bool CreateNewStavkaDokumenta(StavkeDokumentaDTO stavka)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             int tipdok = (from dok in db.Dokuments
@@ -831,7 +831,7 @@ namespace VEM_API.EdiRepositories
             }
         }
 
-        public bool CheckDostupnaKolicina(int sifra_artikla, int kolicina, int broj_dokumenta)
+        public bool CheckDostupnaKolicina(int sifra_artikla, int? kolicina, int? broj_dokumenta)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             int poslovnica = (from dok in db.Dokuments
@@ -910,9 +910,9 @@ namespace VEM_API.EdiRepositories
         #endregion "Manipulacija zalihom"
 
         #region "Prenosi"
-        public IEnumerable<LInterniPrenos> GetAllOtvoreniPrenos()
+        public IEnumerable<InterniPrenosDTO> GetAllOtvoreniPrenos()
         {
-            List<LInterniPrenos> interniPrenosi = null;
+            List<InterniPrenosDTO> interniPrenosi = null;
             VEMTESTEntities db = new VEMTESTEntities();
 
             try
@@ -924,7 +924,7 @@ namespace VEM_API.EdiRepositories
 
                                   where dok.dok_otvoren == true
 
-                                  select new LInterniPrenos()
+                                  select new InterniPrenosDTO()
                                   {
                                       Id = ip.Id,
                                       SaPoslovnice = ip.sa_poslovnice,
