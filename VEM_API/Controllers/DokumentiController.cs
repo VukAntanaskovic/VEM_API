@@ -159,7 +159,7 @@ namespace VEM_API.Controllers
         [Route("api/EDI/TipDokumenta/GetAllTipDokumenta")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LTipDokumenta> GetAllTipDokumenta()
+        public IEnumerable<TipDokumentaDTO> GetAllTipDokumenta()
         {
             return _dokumentRepository.GetAllTipDokumenta();
         }

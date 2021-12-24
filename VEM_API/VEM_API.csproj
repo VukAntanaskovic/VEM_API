@@ -313,7 +313,7 @@
     <Compile Include="Models\PrimalacDTO.cs" />
     <Compile Include="Models\LRaf.cs" />
     <Compile Include="Models\LStatusIsporuke.cs" />
-    <Compile Include="Models\LStavkeDokumenta.cs" />
+    <Compile Include="Models\StavkeDokumentaDTO.cs" />
     <Compile Include="Models\LStavkeTovarnogLista.cs" />
     <Compile Include="Models\TipDokumentaDTO.cs" />
     <Compile Include="Models\LTovarniList.cs" />

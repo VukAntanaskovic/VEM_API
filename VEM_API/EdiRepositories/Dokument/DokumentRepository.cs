@@ -25,15 +25,28 @@ namespace VEM_API.EdiRepositories
         }
 
         #region "Tip dokumenta"
-        public IEnumerable<LTipDokumenta> GetAllTipDokumenta()
+        public IEnumerable<TipDokumentaDTO> GetAllTipDokumenta()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LTipDokumenta> tipovi = new List<LTipDokumenta>();
-            foreach (Tip_Dokumenta t in db.Tip_Dokumenta)
+            List<TipDokumentaDTO> result = null;
+
+            try
             {
-                tipovi.Add(new LTipDokumenta(t.tipdok_sifra, t.tipdok_kratki_naziv, t.tipdok_naziv));
+                result = (from tip in db.Tip_Dokumenta
+
+                          select new TipDokumentaDTO()
+                          {
+                              tipdok_sifra = tip.tipdok_sifra,
+                              tipdok_naziv = tip.tipdok_naziv,
+                              tipdok_kratki_naziv = tip.tipdok_kratki_naziv
+                          }).ToList();
             }
-            return tipovi;
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetAllTipDokumenta()", ex.Message, true);
+            }
+
+            return result;
         }
         #endregion "Tip dokumenta"
 
@@ -108,7 +121,7 @@ namespace VEM_API.EdiRepositories
             }
             catch (Exception ex)
             {
-                _logProvider.AddToLog($"GetAllOtvoreniPrenos()", ex.Message, true);
+                _logProvider.AddToLog($"GetAllDokument()", ex.Message, true);
             }
 
             return result;
@@ -190,68 +203,174 @@ namespace VEM_API.EdiRepositories
             }
             catch (Exception ex)
             {
-                _logProvider.AddToLog($"GetAllOtvoreniPrenos()", ex.Message, true);
+                _logProvider.AddToLog($"GetDokumentById(parametar: {parametar})", ex.Message, true);
             }
 
             return result;
         }
-
-        public IEnumerable<LDokument> GetAllPotvrdjenDokument()
+        
+        public IEnumerable<DokumentDTO> GetAllPotvrdjenDokument()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LDokument> dokumenti = new List<LDokument>();
-            var upit = from dok in db.Dokuments
-                       join tip in db.Tip_Dokumenta on dok.tip_dokumenta equals tip.tipdok_sifra
-                       join kor in db.Korisnik_Sistema on dok.dok_korisnik equals kor.kor_sifra
-                       join kom in db.Komitents on dok.kom_komitent equals kom.kom_sifra
-                       join pri in db.Krajnji_Primalac on dok.pri_primalac equals pri.pri_sifra
-                       join pos in db.Poslovnicas on dok.psl_sifra_poslovnice equals pos.psl_sifra
-                       where dok.tip_dokumenta == 12 && dok.dok_otvoren == true
-                       select new { dok, tip, kor, kom, pri, pos };
-            foreach (var d in upit)
+            List<DokumentDTO> result = null;
+
+            try
             {
-                dokumenti.Add(new LDokument(d.dok.dok_sifra_dokumenta,
-                    new LTipDokumenta(d.tip.tipdok_sifra, d.tip.tipdok_kratki_naziv, d.tip.tipdok_naziv),
-                    Convert.ToDateTime(d.dok.dok_datum_kreiranja),
-                    new LKorisnik(d.kor.kor_sifra, d.kor.kor_ime, d.kor.kor_prezime, d.kor.kor_telefon, d.kor.kor_username, null, d.kor.atr_autorizacija, null),
-                    new LKomitent(d.kom.kom_sifra, d.kom.kom_naziv, d.kom.kom_adresa, d.kom.kom_grad, d.kom.kom_ptt, Convert.ToBoolean(d.kom.kom_dobavljac), Convert.ToBoolean(d.kom.kom_aktivan), d.kom.kom_PIB, d.kom.kom_MBR),
-                    Convert.ToInt32(d.dok.dok_veza),
-                    new LPrimalac(d.pri.pri_sifra, d.pri.pri_ime_prezime, d.pri.pri_adresa, d.pri.pri_adresa_broj, d.pri.pri_grad, d.pri.pri_ptt.ToString(), d.pri.pri_telefon, d.pri.pri_email),
-                    new LPoslovnica(d.pos.psl_sifra, d.pos.psl_naziv, Convert.ToBoolean(d.pos.psl_aktivna)),
-                    Convert.ToDateTime(d.dok.dok_datum_isporuke), d.dok.dok_napomena, d.dok.dok_broj_dokumenta, Convert.ToBoolean(d.dok.dok_otvoren)));
-            }
-            return dokumenti;
-        }
 
-        public IEnumerable<LDokument> GetPotvrdjeniDokumentById(string parametar)
+                result = (from dok in db.Dokuments
+                          join tip in db.Tip_Dokumenta              on dok.tip_dokumenta            equals tip.tipdok_sifra
+                          join kor in db.Korisnik_Sistema           on dok.dok_korisnik             equals kor.kor_sifra
+                          join kom in db.Komitents                  on dok.kom_komitent             equals kom.kom_sifra
+                          join pri in db.Krajnji_Primalac           on dok.pri_primalac             equals pri.pri_sifra
+                          join pos in db.Poslovnicas                on dok.psl_sifra_poslovnice     equals pos.psl_sifra
+
+                          where dok.tip_dokumenta == 12 && 
+                                dok.dok_otvoren == true
+
+                          select new DokumentDTO()
+                          {
+                              dok_sifra_dokumenta = dok.dok_sifra_dokumenta,
+                              dok_broj_dokumenta = dok.dok_broj_dokumenta,
+                              dok_datum_isporuke = dok.dok_datum_isporuke,
+                              dok_datum_Kreiranja = dok.dok_datum_kreiranja,
+                              dok_napomena = dok.dok_napomena,
+                              dok_otvoren = dok.dok_otvoren,
+                              dok_veza = dok.dok_veza,
+                              komitent = new KomitentDTO()
+                              {
+                                  kom_sifra = kom.kom_sifra,
+                                  kom_adresa = kom.kom_adresa,
+                                  kom_dobavljac = kom.kom_dobavljac,
+                                  kom_grad = kom.kom_grad,
+                                  kom_aktivan = kom.kom_aktivan,
+                                  kom_MBR = kom.kom_MBR,
+                                  kom_naziv = kom.kom_naziv,
+                                  kom_PIB = kom.kom_PIB,
+                                  kom_ptt = kom.kom_ptt
+                              },
+                              korisnik = new KorisnikDTO()
+                              {
+                                  kor_sifra = kor.kor_sifra,
+                                  kor_ime = kor.kor_ime,
+                                  kor_prezime = kor.kor_prezime,
+                                  kor_username = kor.kor_username
+                              },
+                              pri_primalac = new PrimalacDTO()
+                              {
+                                  pri_sifra = pri.pri_sifra,
+                                  pri_ime_pezime = pri.pri_ime_prezime,
+                                  pri_adresa = pri.pri_adresa,
+                                  pri_adresa_broj = pri.pri_adresa_broj,
+                                  pri_grad = pri.pri_grad,
+                                  pri_ptt = pri.pri_ptt,
+                                  pri_email = pri.pri_email,
+                                  pri_telefon = pri.pri_telefon
+                              },
+                              tip_dokumenta = new TipDokumentaDTO()
+                              {
+                                  tipdok_sifra = tip.tipdok_sifra,
+                                  tipdok_naziv = tip.tipdok_naziv,
+                                  tipdok_kratki_naziv = tip.tipdok_kratki_naziv
+                              },
+                              psl_sifra_poslovnica = new PoslovnicaDTO()
+                              {
+                                  psl_sifra = pos.psl_sifra,
+                                  psl_naziv = pos.psl_naziv,
+                                  psl_aktivna = pos.psl_aktivna
+                              }
+                          }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetAllPotvrdjenDokument()", ex.Message, true);
+            }
+
+            return result;
+        }
+        
+        public IEnumerable<DokumentDTO> GetPotvrdjeniDokumentById(string parametar)
         {
             VEMTESTEntities db = new VEMTESTEntities();
+            List<DokumentDTO> result = null;
             int sifra;
             int.TryParse(parametar, out sifra);
-            List<LDokument> dokumenti = new List<LDokument>();
-            var upit = from dok in db.Dokuments
-                       join tip in db.Tip_Dokumenta on dok.tip_dokumenta equals tip.tipdok_sifra
-                       join kor in db.Korisnik_Sistema on dok.dok_korisnik equals kor.kor_sifra
-                       join kom in db.Komitents on dok.kom_komitent equals kom.kom_sifra
-                       join pri in db.Krajnji_Primalac on dok.pri_primalac equals pri.pri_sifra
-                       join pos in db.Poslovnicas on dok.psl_sifra_poslovnice equals pos.psl_sifra
-                       where (dok.dok_sifra_dokumenta == sifra || dok.dok_broj_dokumenta == parametar) && dok.tip_dokumenta == 12 && dok.dok_otvoren == true
-                       select new { dok, tip, kor, kom, pri, pos };
-            foreach (var d in upit)
+
+            try
             {
-                dokumenti.Add(new LDokument(d.dok.dok_sifra_dokumenta,
-                    new LTipDokumenta(d.tip.tipdok_sifra, d.tip.tipdok_kratki_naziv, d.tip.tipdok_naziv),
-                    Convert.ToDateTime(d.dok.dok_datum_kreiranja),
-                    new LKorisnik(d.kor.kor_sifra, d.kor.kor_ime, d.kor.kor_prezime, d.kor.kor_telefon, d.kor.kor_username, null, d.kor.atr_autorizacija, null),
-                    new LKomitent(d.kom.kom_sifra, d.kom.kom_naziv, d.kom.kom_adresa, d.kom.kom_grad, d.kom.kom_ptt, Convert.ToBoolean(d.kom.kom_dobavljac), Convert.ToBoolean(d.kom.kom_aktivan), d.kom.kom_PIB, d.kom.kom_MBR),
-                    Convert.ToInt32(d.dok.dok_veza),
-                    new LPrimalac(d.pri.pri_sifra, d.pri.pri_ime_prezime, d.pri.pri_adresa, d.pri.pri_adresa_broj, d.pri.pri_grad, d.pri.pri_ptt.ToString(), d.pri.pri_telefon, d.pri.pri_email),
-                    new LPoslovnica(d.pos.psl_sifra, d.pos.psl_naziv, Convert.ToBoolean(d.pos.psl_aktivna)),
-                    Convert.ToDateTime(d.dok.dok_datum_isporuke), d.dok.dok_napomena, d.dok.dok_broj_dokumenta, Convert.ToBoolean(d.dok.dok_otvoren)));
+
+                result = (from dok in db.Dokuments
+                          join tip in db.Tip_Dokumenta          on dok.tip_dokumenta            equals tip.tipdok_sifra
+                          join kor in db.Korisnik_Sistema       on dok.dok_korisnik             equals kor.kor_sifra
+                          join kom in db.Komitents              on dok.kom_komitent             equals kom.kom_sifra
+                          join pri in db.Krajnji_Primalac       on dok.pri_primalac             equals pri.pri_sifra
+                          join pos in db.Poslovnicas            on dok.psl_sifra_poslovnice     equals pos.psl_sifra
+
+                          where (dok.dok_sifra_dokumenta == sifra       || 
+                                 dok.dok_broj_dokumenta == parametar)   && 
+                                 dok.tip_dokumenta == 12                && 
+                                 dok.dok_otvoren == true
+
+                          select new DokumentDTO()
+                          {
+                              dok_sifra_dokumenta = dok.dok_sifra_dokumenta,
+                              dok_broj_dokumenta = dok.dok_broj_dokumenta,
+                              dok_datum_isporuke = dok.dok_datum_isporuke,
+                              dok_datum_Kreiranja = dok.dok_datum_kreiranja,
+                              dok_napomena = dok.dok_napomena,
+                              dok_otvoren = dok.dok_otvoren,
+                              dok_veza = dok.dok_veza,
+                              komitent = new KomitentDTO()
+                              {
+                                  kom_sifra = kom.kom_sifra,
+                                  kom_adresa = kom.kom_adresa,
+                                  kom_dobavljac = kom.kom_dobavljac,
+                                  kom_grad = kom.kom_grad,
+                                  kom_aktivan = kom.kom_aktivan,
+                                  kom_MBR = kom.kom_MBR,
+                                  kom_naziv = kom.kom_naziv,
+                                  kom_PIB = kom.kom_PIB,
+                                  kom_ptt = kom.kom_ptt
+                              },
+                              korisnik = new KorisnikDTO()
+                              {
+                                  kor_sifra = kor.kor_sifra,
+                                  kor_ime = kor.kor_ime,
+                                  kor_prezime = kor.kor_prezime,
+                                  kor_username = kor.kor_username
+                              },
+                              pri_primalac = new PrimalacDTO()
+                              {
+                                  pri_sifra = pri.pri_sifra,
+                                  pri_ime_pezime = pri.pri_ime_prezime,
+                                  pri_adresa = pri.pri_adresa,
+                                  pri_adresa_broj = pri.pri_adresa_broj,
+                                  pri_grad = pri.pri_grad,
+                                  pri_ptt = pri.pri_ptt,
+                                  pri_email = pri.pri_email,
+                                  pri_telefon = pri.pri_telefon
+                              },
+                              tip_dokumenta = new TipDokumentaDTO()
+                              {
+                                  tipdok_sifra = tip.tipdok_sifra,
+                                  tipdok_naziv = tip.tipdok_naziv,
+                                  tipdok_kratki_naziv = tip.tipdok_kratki_naziv
+                              },
+                              psl_sifra_poslovnica = new PoslovnicaDTO()
+                              {
+                                  psl_sifra = pos.psl_sifra,
+                                  psl_naziv = pos.psl_naziv,
+                                  psl_aktivna = pos.psl_aktivna
+                              }
+                          }).ToList();
             }
-            return dokumenti;
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetPotvrdjeniDokumentById(parametar: {parametar})", ex.Message, true);
+            }
+
+            return result;
         }
-        public bool CreateRequestDocument(LDokument dokument, int? na_poslovnicu)
+        public bool CreateRequestDocument(DokumentDTO dokument, int? na_poslovnicu)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             if (dokument != null)
@@ -398,38 +517,82 @@ namespace VEM_API.EdiRepositories
             }
         }
 
-        public IEnumerable<LDokument> GetAllVezniDokumenti(int id)
+        public IEnumerable<DokumentDTO> GetAllVezniDokumenti(int id)
         {
             VEMTESTEntities db = new VEMTESTEntities();
+            List<DokumentDTO> result = null;
+
             try
             {
-                var dokumenti = from dok in db.Dokuments
-                                join tip in db.Tip_Dokumenta on dok.tip_dokumenta equals tip.tipdok_sifra
-                                join kor in db.Korisnik_Sistema on dok.dok_korisnik equals kor.kor_sifra
-                                join kom in db.Komitents on dok.kom_komitent equals kom.kom_sifra
-                                join pri in db.Krajnji_Primalac on dok.pri_primalac equals pri.pri_sifra
-                                join pos in db.Poslovnicas on dok.psl_sifra_poslovnice equals pos.psl_sifra
-                                where dok.dok_veza == id
-                                select new { dok, tip, kor, kom, pri, pos };
-                List<LDokument> dcs = new List<LDokument>();
-                foreach (var d in dokumenti)
-                {
-                    dcs.Add(new LDokument(d.dok.dok_sifra_dokumenta,
-                       new LTipDokumenta(d.tip.tipdok_sifra, d.tip.tipdok_kratki_naziv, d.tip.tipdok_naziv),
-                       Convert.ToDateTime(d.dok.dok_datum_kreiranja),
-                       new LKorisnik(d.kor.kor_sifra, d.kor.kor_ime, d.kor.kor_prezime, d.kor.kor_telefon, d.kor.kor_username, null, d.kor.atr_autorizacija, null),
-                       new LKomitent(d.kom.kom_sifra, d.kom.kom_naziv, d.kom.kom_adresa, d.kom.kom_grad, d.kom.kom_ptt, Convert.ToBoolean(d.kom.kom_dobavljac), Convert.ToBoolean(d.kom.kom_aktivan), d.kom.kom_PIB, d.kom.kom_MBR),
-                       Convert.ToInt32(d.dok.dok_veza),
-                       new LPrimalac(d.pri.pri_sifra, d.pri.pri_ime_prezime, d.pri.pri_adresa, d.pri.pri_adresa_broj, d.pri.pri_grad, d.pri.pri_ptt.ToString(), d.pri.pri_telefon, d.pri.pri_email),
-                       new LPoslovnica(d.pos.psl_sifra, d.pos.psl_naziv, Convert.ToBoolean(d.pos.psl_aktivna)),
-                       Convert.ToDateTime(d.dok.dok_datum_isporuke), d.dok.dok_napomena, d.dok.dok_broj_dokumenta, Convert.ToBoolean(d.dok.dok_otvoren)));
-                }
-                return dcs;
+
+                result = (from dok in db.Dokuments
+                          join tip in db.Tip_Dokumenta          on dok.tip_dokumenta        equals tip.tipdok_sifra
+                          join kor in db.Korisnik_Sistema       on dok.dok_korisnik         equals kor.kor_sifra
+                          join kom in db.Komitents              on dok.kom_komitent         equals kom.kom_sifra
+                          join pri in db.Krajnji_Primalac       on dok.pri_primalac         equals pri.pri_sifra
+                          join pos in db.Poslovnicas            on dok.psl_sifra_poslovnice equals pos.psl_sifra
+
+                          where dok.dok_veza == id
+
+                          select new DokumentDTO()
+                          {
+                              dok_sifra_dokumenta = dok.dok_sifra_dokumenta,
+                              dok_broj_dokumenta = dok.dok_broj_dokumenta,
+                              dok_datum_isporuke = dok.dok_datum_isporuke,
+                              dok_datum_Kreiranja = dok.dok_datum_kreiranja,
+                              dok_napomena = dok.dok_napomena,
+                              dok_otvoren = dok.dok_otvoren,
+                              dok_veza = dok.dok_veza,
+                              komitent = new KomitentDTO()
+                              {
+                                  kom_sifra = kom.kom_sifra,
+                                  kom_adresa = kom.kom_adresa,
+                                  kom_dobavljac = kom.kom_dobavljac,
+                                  kom_grad = kom.kom_grad,
+                                  kom_aktivan = kom.kom_aktivan,
+                                  kom_MBR = kom.kom_MBR,
+                                  kom_naziv = kom.kom_naziv,
+                                  kom_PIB = kom.kom_PIB,
+                                  kom_ptt = kom.kom_ptt
+                              },
+                              korisnik = new KorisnikDTO()
+                              {
+                                  kor_sifra = kor.kor_sifra,
+                                  kor_ime = kor.kor_ime,
+                                  kor_prezime = kor.kor_prezime,
+                                  kor_username = kor.kor_username
+                              },
+                              pri_primalac = new PrimalacDTO()
+                              {
+                                  pri_sifra = pri.pri_sifra,
+                                  pri_ime_pezime = pri.pri_ime_prezime,
+                                  pri_adresa = pri.pri_adresa,
+                                  pri_adresa_broj = pri.pri_adresa_broj,
+                                  pri_grad = pri.pri_grad,
+                                  pri_ptt = pri.pri_ptt,
+                                  pri_email = pri.pri_email,
+                                  pri_telefon = pri.pri_telefon
+                              },
+                              tip_dokumenta = new TipDokumentaDTO()
+                              {
+                                  tipdok_sifra = tip.tipdok_sifra,
+                                  tipdok_naziv = tip.tipdok_naziv,
+                                  tipdok_kratki_naziv = tip.tipdok_kratki_naziv
+                              },
+                              psl_sifra_poslovnica = new PoslovnicaDTO()
+                              {
+                                  psl_sifra = pos.psl_sifra,
+                                  psl_naziv = pos.psl_naziv,
+                                  psl_aktivna = pos.psl_aktivna
+                              }
+                          }).ToList();
             }
-            catch
+            catch (Exception ex)
             {
-                return null;
+                _logProvider.AddToLog($"GetDokumentById(id: {id})", ex.Message, true);
             }
+
+            return result;
         }
 
         public bool CloseDocument(int id)
@@ -462,26 +625,52 @@ namespace VEM_API.EdiRepositories
         #endregion "Dokumenti"
 
         #region "Stavke dokumenata"
-        public IEnumerable<LStavkeDokumenta> GetAllStavkeDokument(int id)
+        public IEnumerable<StavkeDokumentaDTO> GetAllStavkeDokument(int id)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             int rbr = 1;
-            List<LStavkeDokumenta> stavke = new List<LStavkeDokumenta>();
-            var upit = from stv in db.Stavke_Dokumenta
-                       join art in db.Artikals on stv.stv_sifra_artikla equals art.art_sifra
-                       join jed in db.Jedinica_Mere on art.art_jedinica_mere equals jed.jed_sifra
-                       join dob in db.Komitents on art.kom_dobavljac equals dob.kom_sifra
-                       where stv.dok_broj_dokumenta == id
-                       select new { stv, art, jed, dob };
-            foreach (var st in upit)
+            List<StavkeDokumentaDTO> result = null;
+            try
             {
-                stavke.Add(new LStavkeDokumenta(st.stv.stv_id, Convert.ToInt32(st.stv.dok_broj_dokumenta),
-                    new LArtikal(st.art.art_sifra, st.art.art_naziv, st.art.art_proizvodjac, st.art.art_ean, new LJedinicaMere(st.jed.jed_sifra, st.jed.jed_naziv, st.jed.jed_kratki_naziv),
-                       new LKomitent(st.dob.kom_sifra, st.dob.kom_naziv, st.dob.kom_adresa, st.dob.kom_grad, st.dob.kom_ptt, Convert.ToBoolean(st.dob.kom_dobavljac), Convert.ToBoolean(st.dob.kom_aktivan), st.dob.kom_PIB, st.dob.kom_MBR),
-                       st.art.art_tip, Convert.ToBoolean(st.art.art_aktivan)), Convert.ToInt32(st.stv.stv_kolicina), rbr));
-                rbr++;
+                var upit = from stv in db.Stavke_Dokumenta
+                           join art in db.Artikals on stv.stv_sifra_artikla equals art.art_sifra
+                           join jed in db.Jedinica_Mere on art.art_jedinica_mere equals jed.jed_sifra
+                           join dob in db.Komitents on art.kom_dobavljac equals dob.kom_sifra
+                           where stv.dok_broj_dokumenta == id
+                           select new { stv, art, jed, dob };
+                foreach (var st in upit)
+                {
+                    result.Add(new StavkeDokumentaDTO()
+                    {
+                        stv_id = st.stv.stv_id,
+                        stv_broj_dokumenta = st.stv.dok_broj_dokumenta,
+                        stv_kolicina = st.stv.stv_kolicina,
+                        rbr = rbr,
+                        artikal = new ArtikalDTO()
+                        {
+                            art_sifra = st.art.art_sifra,
+                            art_tip = st.art.art_tip,
+                            art_naziv = st.art.art_naziv,
+                            art_proizvodjac = st.art.art_proizvodjac,
+                            art_ean = st.art.art_ean,
+                            jedinica_mere = new JedinicaMereDTO()
+                            {
+                                jed_sifra = st.jed.jed_sifra,
+                                jed_naziv = st.jed.jed_naziv,
+                                jed_kratki_naziv = st.jed.jed_kratki_naziv
+                            }
+                        }
+
+                    });
+                    rbr++;
+                }
             }
-            return stavke;
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetAllStavkeDokument(id: {id})", ex.Message, true);
+            }
+
+            return result;
         }
 
         public bool CreateNewStavkaDokumenta(LStavkeDokumenta stavka)
