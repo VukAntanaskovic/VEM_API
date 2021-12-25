@@ -9,9 +9,9 @@ namespace VEM_API.Repositories
 {
     public interface IPrimalacRepository
     {
-        IEnumerable<LPrimalac> GetAllPrimalac();
-        IEnumerable<LPrimalac> GetPrimalacById(int id);
-        bool InsertNewPrimalac(LPrimalac primalac);
+        IEnumerable<PrimalacDTO> GetAllPrimalac();
+        IEnumerable<PrimalacDTO> GetPrimalacById(int id);
+        bool InsertNewPrimalac(PrimalacDTO primalac);
 
     }
 }

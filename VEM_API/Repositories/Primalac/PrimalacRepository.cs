@@ -20,47 +20,71 @@ namespace VEM_API.Repositories
             _entity = entity;
         }
 
-        public IEnumerable<LPrimalac> GetAllPrimalac()
+        public IEnumerable<PrimalacDTO> GetAllPrimalac()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LPrimalac> primalacs = new List<LPrimalac>();
-            foreach (var primalac in db.Krajnji_Primalac)
+            List<PrimalacDTO> result = null;
+
+            try
             {
-                primalacs.Add(
-                    new LPrimalac(
-                        primalac.pri_sifra, 
-                        primalac.pri_ime_prezime, 
-                        primalac.pri_adresa, 
-                        primalac.pri_adresa_broj, 
-                        primalac.pri_grad, 
-                        primalac.pri_ptt.ToString(), 
-                        primalac.pri_telefon, 
-                        primalac.pri_email));
+                result = (from p in db.Krajnji_Primalac
+
+                          orderby p.pri_ime_prezime ascending
+
+                          select new PrimalacDTO()
+                          {
+                              pri_sifra = p.pri_sifra,
+                              pri_ime_pezime = p.pri_ime_prezime,
+                              pri_adresa = p.pri_adresa,
+                              pri_adresa_broj = p.pri_adresa_broj,
+                              pri_email = p.pri_email,
+                              pri_grad = p.pri_grad,
+                              pri_ptt = p.pri_ptt,
+                              pri_telefon = p.pri_telefon
+                          }).ToList();
             }
-            return primalacs;
+            catch(Exception ex)
+            {
+                _logProvider.AddToLog("GetAllPrimalac()", ex.Message, true);
+            }
+
+            return result;
         }
 
-        public IEnumerable<LPrimalac> GetPrimalacById(int id)
+        public IEnumerable<PrimalacDTO> GetPrimalacById(int id)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LPrimalac> primalacs = new List<LPrimalac>();
-            foreach (var primalac in db.Krajnji_Primalac.Where(x => x.pri_sifra == id))
+            List<PrimalacDTO> result = null;
+
+            try
             {
-                primalacs.Add(
-                    new LPrimalac(
-                        primalac.pri_sifra, 
-                        primalac.pri_ime_prezime, 
-                        primalac.pri_adresa, 
-                        primalac.pri_adresa_broj, 
-                        primalac.pri_grad, 
-                        primalac.pri_ptt.ToString(), 
-                        primalac.pri_telefon, 
-                        primalac.pri_email));
+                result = (from p in db.Krajnji_Primalac
+
+                          where p.pri_sifra == id
+
+                          orderby p.pri_ime_prezime ascending
+
+                          select new PrimalacDTO()
+                          {
+                              pri_sifra = p.pri_sifra,
+                              pri_ime_pezime = p.pri_ime_prezime,
+                              pri_adresa = p.pri_adresa,
+                              pri_adresa_broj = p.pri_adresa_broj,
+                              pri_email = p.pri_email,
+                              pri_grad = p.pri_grad,
+                              pri_ptt = p.pri_ptt,
+                              pri_telefon = p.pri_telefon
+                          }).ToList();
             }
-            return primalacs;
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetPrimalacById(id: {id})", ex.Message, true);
+            }
+
+            return result;
         }
 
-        public bool InsertNewPrimalac(LPrimalac primalac)
+        public bool InsertNewPrimalac(PrimalacDTO primalac)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             if (primalac != null)
@@ -72,7 +96,7 @@ namespace VEM_API.Repositories
                     krajnji_Primalac.pri_adresa = primalac.pri_adresa;
                     krajnji_Primalac.pri_adresa_broj = primalac.pri_adresa_broj;
                     krajnji_Primalac.pri_grad = primalac.pri_grad;
-                    krajnji_Primalac.pri_ptt = int.Parse(primalac.pri_ptt);
+                    krajnji_Primalac.pri_ptt = primalac.pri_ptt;
                     krajnji_Primalac.pri_telefon = primalac.pri_telefon;
                     krajnji_Primalac.pri_email = primalac.pri_email;
                     db.Krajnji_Primalac.Add(krajnji_Primalac);

@@ -11,7 +11,7 @@ namespace VEM_API.Models
         public ArtikalDTO artikal { get; set; }
         public int art_dostupna_kolicina { get; set; }
         public int art_rezervisana_kolicina { get; set; }
-        public LPoslovnica poslovnica { get; set; }
+        public PoslovnicaDTO poslovnica { get; set; }
         public LRaf raf { get; set; }
     }
 }

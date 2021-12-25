@@ -22,14 +22,14 @@ namespace VEM_API.Controllers
         // GET api/<controller>
         [Route("api/WMS/Primalac/GetAllPrimalac")]
         [BasicAuthentication]
-        public IEnumerable<LPrimalac> Get()
+        public IEnumerable<PrimalacDTO> Get()
         {
             return _primalacRepository.GetAllPrimalac();
         }
 
         [Route("api/WMS/Primalac/GetPrimalacById/{id}")]
         [BasicAuthentication]
-        public IEnumerable<LPrimalac> Get(int id)
+        public IEnumerable<PrimalacDTO> Get(int id)
         {
             return _primalacRepository.GetPrimalacById(id);
         }
@@ -37,7 +37,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/WMS/Primalac/InsertNewPrimalac")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody]LPrimalac primalac)
+        public HttpResponseMessage Post([FromBody]PrimalacDTO primalac)
         {
             if (_primalacRepository.InsertNewPrimalac(primalac))
             {

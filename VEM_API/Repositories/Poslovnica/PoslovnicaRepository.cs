@@ -24,39 +24,60 @@ namespace VEM_API.Repositories
         #region "Poslovnica"
         //Poslovnica
 
-        public  IEnumerable<LPoslovnica> GetAllPoslovnica()
+        public  IEnumerable<PoslovnicaDTO> GetAllPoslovnica()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LPoslovnica> poslovnicas = new List<LPoslovnica>();
-            foreach (DbModel.Poslovnica p in db.Poslovnicas)
+            List<PoslovnicaDTO> result = null;
+
+            try
             {
-                poslovnicas.Add(
-                    new LPoslovnica(
-                        p.psl_sifra, 
-                        p.psl_naziv, 
-                        Convert.ToBoolean(p.psl_aktivna)));
+                result = (from p in db.Poslovnicas
+
+                          select new PoslovnicaDTO()
+                          {
+                              psl_sifra = p.psl_sifra,
+                              psl_naziv = p.psl_naziv,
+                              psl_aktivna = p.psl_aktivna
+                          }).ToList();
+            }
+            catch(Exception ex)
+            {
+                _logProvider.AddToLog("GetAllPoslovnica()", ex.Message, true);
             }
 
-            return poslovnicas;
+            return result;
+            
         }// uzimanje svih poslovnica
 
-        public IEnumerable<LPoslovnica> GetPoslovnicaByParametar(string parametar)
+        public IEnumerable<PoslovnicaDTO> GetPoslovnicaByParametar(string parametar)
         {
             int sifra;
             int.TryParse(parametar, out sifra);
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LPoslovnica> poslovnicas = new List<LPoslovnica>();
-            var upit = from n in db.Poslovnicas
-                       where n.psl_sifra == sifra || n.psl_naziv.StartsWith(parametar)
-                       select n;
-            foreach (DbModel.Poslovnica p in upit)
+            List<PoslovnicaDTO> result = null;
+
+            try
             {
-                poslovnicas.Add(new LPoslovnica(p.psl_sifra, p.psl_naziv, Convert.ToBoolean(p.psl_aktivna)));
+                result = (from p in db.Poslovnicas
+
+                           where    p.psl_sifra == sifra || 
+                                    p.psl_naziv.StartsWith(parametar)
+                           select new PoslovnicaDTO() 
+                           {
+                                psl_sifra = p.psl_sifra,
+                                psl_naziv = p.psl_naziv,
+                                psl_aktivna = p.psl_aktivna
+                           }).ToList();
             }
-            return poslovnicas;
+            catch(Exception ex)
+            {
+                _logProvider.AddToLog($"GetPoslovnicaByParametar(parametar: {parametar})", ex.Message, true);
+            }
+
+            return result;
         }//pretraga poslovnica
 
-        public bool AddNewPoslovnica(LPoslovnica poslovnica)
+        public bool AddNewPoslovnica(PoslovnicaDTO poslovnica)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             if (poslovnica != null)
@@ -69,25 +90,25 @@ namespace VEM_API.Repositories
                     db.Poslovnicas.Add(pos);
                     db.SaveChanges();
                     OkResponseMessage = "Uspesno ste kreirali poslovnicu";
-                    _logProvider.AddToLog("PoslovnicaRepository.AddNewPoslovnica(LPoslovnica poslovnica)", OkResponseMessage, false);
+                    _logProvider.AddToLog("PoslovnicaRepository -> AddNewPoslovnica(LPoslovnica poslovnica)", OkResponseMessage, false);
                     return true;
                 }
                 catch (Exception e)
                 {
                     ErrorResponseMessage = "Greska prilikom kreiranja poslovnice: " + e.Message;
-                    _logProvider.AddToLog("PoslovnicaRepository.AddNewPoslovnica(LPoslovnica poslovnica)", ErrorResponseMessage, true);
+                    _logProvider.AddToLog("PoslovnicaRepository -> AddNewPoslovnica(LPoslovnica poslovnica)", ErrorResponseMessage, true);
                     return false;
                 }
             }
             else
             {
                 ErrorResponseMessage = "Pogresno prosledjeni podaci";
-                _logProvider.AddToLog("PoslovnicaRepository.AddNewPoslovnica(LPoslovnica poslovnica)", ErrorResponseMessage, true);
+                _logProvider.AddToLog("PoslovnicaRepository -> AddNewPoslovnica(LPoslovnica poslovnica)", ErrorResponseMessage, true);
                 return false;
             }
         } // dodavanje nove poslovnice
 
-        public  bool UpdatePoslovnica(int id, LPoslovnica psl)
+        public  bool UpdatePoslovnica(int id, PoslovnicaDTO psl)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
@@ -96,7 +117,7 @@ namespace VEM_API.Repositories
                 poslovnica.psl_naziv = psl.psl_naziv;
                 db.SaveChanges();
                 OkResponseMessage = "Uspesno ste izmenili poslovnicu";
-                _logProvider.AddToLog("PoslovnicaRepository.UpdatePoslovnica(int id, LPoslovnica psl)", OkResponseMessage, false);
+                _logProvider.AddToLog("PoslovnicaRepository -> UpdatePoslovnica(int id, LPoslovnica psl)", OkResponseMessage, false);
                 return true;
             }
             catch (Exception e)

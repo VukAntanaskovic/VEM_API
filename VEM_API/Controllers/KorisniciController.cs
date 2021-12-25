@@ -23,7 +23,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>
         [Route("api/WMS/Korisnici/GetAllKorisnici")]
         [BasicAuthentication]
-        public IEnumerable<LKorisnik> Get()
+        public IEnumerable<KorisnikDTO> Get()
         {
             return _korisnikRepository.GetAllKorisnik();
         }
@@ -31,7 +31,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>/5
         [Route("api/WMS/Korisnici/GetKorisnikByParametar/{parametar}")]
         [BasicAuthentication]
-        public IEnumerable<LKorisnik> Get(string parametar)
+        public IEnumerable<KorisnikDTO> Get(string parametar)
         {
             return _korisnikRepository.GetKorisnikByParametar(parametar);
         }
@@ -39,7 +39,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/WMS/Korisnici/CreateNewKorisnik")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody]LKorisnik korisnik)
+        public HttpResponseMessage Post([FromBody]KorisnikDTO korisnik)
         {
             if (_korisnikRepository.CreateNewKorisnik(korisnik))
             {
@@ -54,7 +54,7 @@ namespace VEM_API.Controllers
         // PUT api/<controller>/5
         [Route("api/WMS/Korisnici/ChangePassword/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage Put(int id, [FromBody]LKorisnik korisnik)
+        public HttpResponseMessage Put(int id, [FromBody]KorisnikDTO korisnik)
         {
             if (_korisnikRepository.UpdatePasswordKorisnik(id, korisnik))
             {
@@ -69,7 +69,7 @@ namespace VEM_API.Controllers
         [HttpPut]
         [Route("api/WMS/Korisnici/ChangePoslovnica/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage ChangePoslovnica(int id, [FromBody]LKorisnik korisnik)
+        public HttpResponseMessage ChangePoslovnica(int id, [FromBody]KorisnikDTO korisnik)
         {
             if (_korisnikRepository.ChangePoslovnica(id, korisnik))
             {
@@ -84,7 +84,7 @@ namespace VEM_API.Controllers
         [HttpPut]
         [Route("api/WMS/Korisnici/UpdateKorisnik/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage UpdateKorisnik(int id, [FromBody]LKorisnik korisnik)
+        public HttpResponseMessage UpdateKorisnik(int id, [FromBody]KorisnikDTO korisnik)
         {
             if (_korisnikRepository.UpdateKorisnik(id, korisnik))
             {
@@ -99,7 +99,7 @@ namespace VEM_API.Controllers
         [HttpGet]
         [Route("api/WMS/Korisnik/GetAllRola")]
         [BasicAuthentication]
-        public IEnumerable<Autorizacija_Korisnika> GetAllRola()
+        public IEnumerable<AutorizacijaKorisnikaDTO> GetAllRola()
         {
             return _korisnikRepository.GetAllRola();
         }

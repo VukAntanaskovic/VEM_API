@@ -9,11 +9,11 @@ namespace VEM_API.Repositories
 {
     public interface IPoslovnicaRepository
     {
-        IEnumerable<LPoslovnica> GetAllPoslovnica();
-        IEnumerable<LPoslovnica> GetPoslovnicaByParametar(string parametar);
-        bool AddNewPoslovnica(LPoslovnica poslovnica);
+        IEnumerable<PoslovnicaDTO> GetAllPoslovnica();
+        IEnumerable<PoslovnicaDTO> GetPoslovnicaByParametar(string parametar);
+        bool AddNewPoslovnica(PoslovnicaDTO poslovnica);
         bool ActivateDeactivatePoslovnica(int psl_sifra);
-        bool UpdatePoslovnica(int id, LPoslovnica psl);
+        bool UpdatePoslovnica(int id, PoslovnicaDTO psl);
 
     }
 }

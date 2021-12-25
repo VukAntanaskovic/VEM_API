@@ -20,7 +20,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>
         [Route("api/WMS/Poslovnica/GetAllPoslovnica")]
         [BasicAuthentication]
-        public IEnumerable<LPoslovnica> Get()
+        public IEnumerable<PoslovnicaDTO> Get()
         {
             return _poslovnicaRepository.GetAllPoslovnica();
         }
@@ -28,14 +28,14 @@ namespace VEM_API.Controllers
         [Route("api/WMS/Poslovnica/GetAllAktivnePoslovnicePoslovnica")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LPoslovnica> GetAktivnaPoslovnica()
+        public IEnumerable<PoslovnicaDTO> GetAktivnaPoslovnica()
         {
             return _poslovnicaRepository.GetAllPoslovnica().Where(x => x.psl_aktivna == true);
         }
 
         [Route("api/WMS/Poslovnica/GetPoslovnicaByParametar/{parametar}")]
         [BasicAuthentication]
-        public IEnumerable<LPoslovnica> Get(string parametar)
+        public IEnumerable<PoslovnicaDTO> Get(string parametar)
         {
             return _poslovnicaRepository.GetPoslovnicaByParametar(parametar);
         }
@@ -43,7 +43,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/WMS/Poslovnica/AddNewPoslovnica")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody] LPoslovnica poslovnica)
+        public HttpResponseMessage Post([FromBody] PoslovnicaDTO poslovnica)
         {
             if (_poslovnicaRepository.AddNewPoslovnica(poslovnica))
             {
@@ -58,7 +58,7 @@ namespace VEM_API.Controllers
         // PUT api/<controller>/5
         [Route("api/WMS/Poslovnica/UpdatePoslovnica/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage Put(int id, [FromBody] LPoslovnica poslovnica)
+        public HttpResponseMessage Put(int id, [FromBody] PoslovnicaDTO poslovnica)
         {
             if (_poslovnicaRepository.UpdatePoslovnica(id, poslovnica))
             {

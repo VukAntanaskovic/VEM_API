@@ -14,11 +14,11 @@ namespace VEM_API.Models
         public string kor_username { get; set; }
         public string kor_password { get; set; }
         public int atr_autorizacija { get; set; }
-        public string psl_poslovnica_rada { get; set; }
+        public int? psl_poslovnica_rada { get; set; }
         public string atr_naziv { get; set; }
-        public bool WEB { get; set; } = false;
-        public bool GUI { get; set; } = false;
-        public bool MOBILE { get; set; } = false;
+        public bool? WEB { get; set; } = false;
+        public bool? GUI { get; set; } = false;
+        public bool? MOBILE { get; set; } = false;
 
     }
 }

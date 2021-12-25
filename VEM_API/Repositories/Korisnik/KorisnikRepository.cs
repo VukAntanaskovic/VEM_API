@@ -100,41 +100,81 @@ namespace VEM_API.Repositories
             }
         }
 
-        public IEnumerable<LKorisnik> GetAllKorisnik()
+        public IEnumerable<KorisnikDTO> GetAllKorisnik()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LKorisnik> korisnici = new List<LKorisnik>();
-            var upit = from kor in db.Korisnik_Sistema
-                       join atr in db.Autorizacija_Korisnika on kor.atr_autorizacija equals atr.atr_sifra
-                       select new { kor, atr };
-            foreach (var k in upit)
+            List<KorisnikDTO> result = null;
+
+            try
             {
-                korisnici.Add(new LKorisnik(k.kor.kor_sifra, k.kor.kor_ime, k.kor.kor_prezime, k.kor.kor_telefon, k.kor.kor_username, null, k.kor.atr_autorizacija, k.kor.psl_poslovnica_rada.ToString()) { atr_naziv = k.atr.atr_naziv, WEB = Convert.ToBoolean(k.kor.VEM_WEB), GUI = Convert.ToBoolean(k.kor.VEM_GUI), MOBILE = Convert.ToBoolean(k.kor.VEM_MOBILE) });
+                result = (from kor in db.Korisnik_Sistema
+                          join atr in db.Autorizacija_Korisnika on kor.atr_autorizacija equals atr.atr_sifra
+
+                           select new KorisnikDTO() 
+                           {
+                                kor_sifra = kor.kor_sifra,
+                                kor_ime = kor.kor_ime,
+                                kor_prezime = kor.kor_prezime,
+                                kor_telefon = kor.kor_prezime,
+                                kor_username = kor.kor_username,
+                                atr_autorizacija = atr.atr_sifra,
+                                atr_naziv = atr.atr_naziv,
+                                psl_poslovnica_rada = kor.psl_poslovnica_rada,
+                                WEB = kor.VEM_WEB,
+                                GUI = kor.VEM_GUI,
+                                MOBILE = kor.VEM_MOBILE
+                           }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetAllKorisnik()", ex.Message, true);
             }
 
-            return korisnici;
+            return result;
         }
 
 
-        public IEnumerable<LKorisnik> GetKorisnikByParametar(string parametar)
+        public IEnumerable<KorisnikDTO> GetKorisnikByParametar(string parametar)
         {
             int sifra;
             int.TryParse(parametar, out sifra);
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LKorisnik> korisnici = new List<LKorisnik>();
-            var upit = from kor in db.Korisnik_Sistema
-                       join atr in db.Autorizacija_Korisnika on kor.atr_autorizacija equals atr.atr_sifra
-                       where kor.kor_sifra == sifra || (kor.kor_ime.StartsWith(parametar) || kor.kor_prezime.StartsWith(parametar) || kor.kor_username.Equals(parametar))
-                       select new { kor, atr };
-            foreach (var k in upit)
+            List<KorisnikDTO> result = null;
+
+            try
             {
-                korisnici.Add(new LKorisnik(k.kor.kor_sifra, k.kor.kor_ime, k.kor.kor_prezime, k.kor.kor_telefon, k.kor.kor_username, null, k.kor.atr_autorizacija, k.kor.psl_poslovnica_rada.ToString()) { atr_naziv = k.atr.atr_naziv, WEB = Convert.ToBoolean(k.kor.VEM_WEB), GUI = Convert.ToBoolean(k.kor.VEM_GUI), MOBILE = Convert.ToBoolean(k.kor.VEM_MOBILE) });
+                result = (from kor in db.Korisnik_Sistema
+                          join atr in db.Autorizacija_Korisnika on kor.atr_autorizacija equals atr.atr_sifra
+                         
+                          where  kor.kor_sifra == sifra                 || 
+                                (kor.kor_ime.StartsWith(parametar)      || 
+                                 kor.kor_prezime.StartsWith(parametar)  || 
+                                 kor.kor_username.Equals(parametar))
+                          
+                          select new KorisnikDTO()
+                          {
+                              kor_sifra = kor.kor_sifra,
+                              kor_ime = kor.kor_ime,
+                              kor_prezime = kor.kor_prezime,
+                              kor_telefon = kor.kor_prezime,
+                              kor_username = kor.kor_username,
+                              atr_autorizacija = atr.atr_sifra,
+                              atr_naziv = atr.atr_naziv,
+                              psl_poslovnica_rada = kor.psl_poslovnica_rada,
+                              WEB = kor.VEM_WEB,
+                              GUI = kor.VEM_GUI,
+                              MOBILE = kor.VEM_MOBILE
+                          }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetKorisnikByParametar(parametar: {parametar})", ex.Message, true);
             }
 
-            return korisnici;
+            return result;
         }
 
-        public bool CreateNewKorisnik(LKorisnik korisnik)
+        public bool CreateNewKorisnik(KorisnikDTO korisnik)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
@@ -150,7 +190,7 @@ namespace VEM_API.Repositories
                     VEM_GUI = korisnik.GUI,
                     VEM_MOBILE = korisnik.MOBILE,
                     atr_autorizacija = korisnik.atr_autorizacija,
-                    psl_poslovnica_rada = int.Parse(korisnik.psl_poslovnica_rada)
+                    psl_poslovnica_rada = korisnik.psl_poslovnica_rada
                 };
                 db.Korisnik_Sistema.Add(k);
                 db.SaveChanges();
@@ -166,7 +206,7 @@ namespace VEM_API.Repositories
             }
         }
 
-        public bool UpdatePasswordKorisnik(int id, LKorisnik korisnik)
+        public bool UpdatePasswordKorisnik(int id, KorisnikDTO korisnik)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
@@ -186,13 +226,13 @@ namespace VEM_API.Repositories
             }
         }
 
-        public bool ChangePoslovnica(int id, LKorisnik korisnik)
+        public bool ChangePoslovnica(int id, KorisnikDTO korisnik)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
             {
                 Korisnik_Sistema kor = db.Korisnik_Sistema.SingleOrDefault(x => x.kor_sifra == id);
-                kor.psl_poslovnica_rada = int.Parse(korisnik.psl_poslovnica_rada);
+                kor.psl_poslovnica_rada = korisnik.psl_poslovnica_rada;
                 db.SaveChanges();
                 OkResponseMessage = "Uspesno ste izmenili poslovnicu za korisnika: " + kor.kor_sifra;
                 _logProvider.AddToLog("ApiHelper.ChangePoslovnica(int id, LKorisnik korisnik)", OkResponseMessage, false);
@@ -206,7 +246,7 @@ namespace VEM_API.Repositories
             }
         }
 
-        public bool UpdateKorisnik(int id, LKorisnik korisnik)
+        public bool UpdateKorisnik(int id, KorisnikDTO korisnik)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
@@ -229,19 +269,27 @@ namespace VEM_API.Repositories
             }
         }
 
-        public IEnumerable<Autorizacija_Korisnika> GetAllRola()
+        public IEnumerable<AutorizacijaKorisnikaDTO> GetAllRola()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<Autorizacija_Korisnika> atr = new List<Autorizacija_Korisnika>();
-            foreach (var a in db.Autorizacija_Korisnika)
+            List<AutorizacijaKorisnikaDTO> result = null;
+
+            try
             {
-                atr.Add(new Autorizacija_Korisnika()
-                {
-                    atr_sifra = a.atr_sifra,
-                    atr_naziv = a.atr_naziv
-                });
+                result = (from atr in db.Autorizacija_Korisnika
+
+                          select new AutorizacijaKorisnikaDTO()
+                          {
+                              atr_sifra = atr.atr_sifra,
+                              atr_naziv = atr.atr_naziv
+                          }).ToList();
             }
-            return atr;
+            catch(Exception ex)
+            {
+                _logProvider.AddToLog("GetAllRola()", ex.Message, true);
+            }
+
+            return result;
         }
     }
 }

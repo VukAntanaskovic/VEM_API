@@ -119,7 +119,7 @@ namespace VEM_API.Controllers
         [Route("api/EDI/StavkeDokumenta/GetAllStavkeDokument/{id}")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LStavkeDokumenta> GetAllStavkeDokument(int id)
+        public IEnumerable<StavkeDokumentaDTO> GetAllStavkeDokument(int id)
         {
             return _dokumentRepository.GetAllStavkeDokument(id);
         }
@@ -127,7 +127,7 @@ namespace VEM_API.Controllers
         [Route("api/EDI/StavkeDokumenta/CreateNewStavkaDokumenta")]
         [BasicAuthentication]
         [HttpPost]
-        public HttpResponseMessage CreateNewStavkaDokumenta([FromBody] LStavkeDokumenta stavke)
+        public HttpResponseMessage CreateNewStavkaDokumenta([FromBody] StavkeDokumentaDTO stavke)
         {
             if (_dokumentRepository.CreateNewStavkaDokumenta(stavke))
             {
@@ -225,7 +225,7 @@ namespace VEM_API.Controllers
         [Route("api/EDI/Dokumenti/GetAllOtvoreniPrenos")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LInterniPrenos> GetAllOtvoreniPrenos()
+        public IEnumerable<InterniPrenosDTO> GetAllOtvoreniPrenos()
         {
             return _dokumentRepository.GetAllOtvoreniPrenos();
         }

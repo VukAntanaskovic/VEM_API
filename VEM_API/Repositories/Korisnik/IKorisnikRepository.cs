@@ -11,14 +11,12 @@ namespace VEM_API.Repositories
     public interface IKorisnikRepository
     {
         bool AuthenticateUser(AppUser appUser, string app);
-        IEnumerable<LKorisnik> GetAllKorisnik();
-        IEnumerable<LKorisnik> GetKorisnikByParametar(string parametar);
-        bool CreateNewKorisnik(LKorisnik korisnik);
-        bool UpdatePasswordKorisnik(int id, LKorisnik korisnik);
-        bool ChangePoslovnica(int id, LKorisnik korisnik);
-        bool UpdateKorisnik(int id, LKorisnik korisnik);
-        IEnumerable<Autorizacija_Korisnika> GetAllRola();
-
-
+        IEnumerable<KorisnikDTO> GetAllKorisnik();
+        IEnumerable<KorisnikDTO> GetKorisnikByParametar(string parametar);
+        bool CreateNewKorisnik(KorisnikDTO korisnik);
+        bool UpdatePasswordKorisnik(int id, KorisnikDTO korisnik);
+        bool ChangePoslovnica(int id, KorisnikDTO korisnik);
+        bool UpdateKorisnik(int id, KorisnikDTO korisnik);
+        IEnumerable<AutorizacijaKorisnikaDTO> GetAllRola();
     }
 }

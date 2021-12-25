@@ -93,17 +93,17 @@ namespace VEM_API.EdiRepositories
                             dok_veza = isp.isp.dok_veza,
                             isp_datum = isp.isp.isp_datum,
 
-                            pri_primalac = new LPrimalac
-                            (
-                                isp.pri.pri_sifra,
-                                isp.pri.pri_ime_prezime,
-                                isp.pri.pri_adresa,
-                                isp.pri.pri_adresa_broj,
-                                isp.pri.pri_grad,
-                                isp.pri.pri_ptt.ToString(),
-                                isp.pri.pri_telefon,
-                                isp.pri.pri_email
-                                ),
+                            pri_primalac = new PrimalacDTO()
+                            {
+                               pri_sifra =  isp.pri.pri_sifra,
+                               pri_ime_pezime = isp.pri.pri_ime_prezime,
+                               pri_adresa = isp.pri.pri_adresa,
+                               pri_adresa_broj = isp.pri.pri_adresa_broj,
+                               pri_grad = isp.pri.pri_grad,
+                               pri_ptt = isp.pri.pri_ptt,
+                               pri_telefon = isp.pri.pri_telefon,
+                               pri_email = isp.pri.pri_email
+                            },
 
                             sts_status = new LStatusIsporuke
                             {
@@ -142,17 +142,17 @@ namespace VEM_API.EdiRepositories
                             dok_veza = isp.isp.dok_veza,
                             isp_datum = isp.isp.isp_datum,
 
-                            pri_primalac = new LPrimalac
-                            (
-                                isp.pri.pri_sifra,
-                                isp.pri.pri_ime_prezime,
-                                isp.pri.pri_adresa,
-                                isp.pri.pri_adresa_broj,
-                                isp.pri.pri_grad,
-                                isp.pri.pri_ptt.ToString(),
-                                isp.pri.pri_telefon,
-                                isp.pri.pri_email
-                                ),
+                            pri_primalac = new PrimalacDTO
+                            {
+                                pri_sifra = isp.pri.pri_sifra,
+                                pri_ime_pezime = isp.pri.pri_ime_prezime,
+                                pri_adresa = isp.pri.pri_adresa,
+                                pri_adresa_broj = isp.pri.pri_adresa_broj,
+                                pri_grad = isp.pri.pri_grad,
+                                pri_ptt = isp.pri.pri_ptt,
+                                pri_telefon = isp.pri.pri_telefon,
+                                pri_email = isp.pri.pri_email
+                            },
 
                             sts_status = new LStatusIsporuke
                             {
@@ -194,17 +194,17 @@ namespace VEM_API.EdiRepositories
                         dok_veza = isp.isp.dok_veza,
                         isp_datum = isp.isp.isp_datum,
 
-                        pri_primalac = new LPrimalac
-                        (
-                            isp.pri.pri_sifra,
-                            isp.pri.pri_ime_prezime,
-                            isp.pri.pri_adresa,
-                            isp.pri.pri_adresa_broj,
-                            isp.pri.pri_grad,
-                            isp.pri.pri_ptt.ToString(),
-                            isp.pri.pri_telefon,
-                            isp.pri.pri_email
-                            ),
+                        pri_primalac = new PrimalacDTO()
+                        {
+                            pri_sifra = isp.pri.pri_sifra,
+                            pri_ime_pezime = isp.pri.pri_ime_prezime,
+                            pri_adresa = isp.pri.pri_adresa,
+                            pri_adresa_broj = isp.pri.pri_adresa_broj,
+                            pri_grad = isp.pri.pri_grad,
+                            pri_ptt = isp.pri.pri_ptt,
+                            pri_telefon = isp.pri.pri_telefon,
+                            pri_email = isp.pri.pri_email
+                        },
 
                         sts_status = new LStatusIsporuke
                         {
@@ -348,16 +348,14 @@ namespace VEM_API.EdiRepositories
                         vzc_vozac = new LVozaci
                         {
                             vzc_sifra = t.vzc.vzc_sifra,
-                            korisnik = new LKorisnik(
-                                t.kor.kor_sifra,
-                                t.kor.kor_ime,
-                                t.kor.kor_prezime,
-                                t.kor.kor_telefon,
-                                t.kor.kor_username,
-                                null,
-                                t.kor.atr_autorizacija,
-                                null
-                                ),
+                            korisnik = new KorisnikDTO()
+                            {
+                                kor_sifra = t.kor.kor_sifra,
+                                kor_ime = t.kor.kor_ime,
+                                kor_prezime = t.kor.kor_prezime,
+                                kor_username = t.kor.kor_username
+                            },
+
                             vozilo = new LVozilo
                             {
                                 vzl_sifra = t.vzl.vzl_sifra,
