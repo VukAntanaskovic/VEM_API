@@ -9,10 +9,10 @@ namespace VEM_API.Repositories
 {
     public interface IVoziloRepository
     {
-        IEnumerable<LVozilo> GetAllVozila();
-        IEnumerable<LVozilo> GetVoziloByParametar(string parametar);
-        bool CreateNewVozilo(LVozilo vozilo);
-        bool UpdateVozilo(int id, LVozilo vozilo);
+        IEnumerable<VoziloDTO> GetAllVozila();
+        IEnumerable<VoziloDTO> GetVoziloByParametar(string parametar);
+        bool CreateNewVozilo(VoziloDTO vozilo);
+        bool UpdateVozilo(int id, VoziloDTO vozilo);
 
     }
 }

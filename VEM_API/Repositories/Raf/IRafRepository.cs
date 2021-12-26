@@ -10,11 +10,11 @@ namespace VEM_API.Repositories
     public interface IRafRepository
     {
         bool AddToRaf(int art_sifra, int psl_sifra, int rad_sifra);
-        bool CreateNewRaf(LRaf raf);
-        IEnumerable<LZalihaArtikla> GetAllArtikalInRaf(int raf_sifra);
-        IEnumerable<LRaf> GetAllRaf();
-        bool UpdateRaf(int id, LRaf lokacija);
-        IEnumerable<LRaf> GetAllRafInPoslovnica(int id, string parametar);
+        bool CreateNewRaf(RafDTO raf);
+        IEnumerable<ZalihaArtiklaDTO> GetAllArtikalInRaf(int raf_sifra);
+        IEnumerable<RafDTO> GetAllRaf();
+        bool UpdateRaf(int id, RafDTO lokacija);
+        IEnumerable<RafDTO> GetAllRafInPoslovnica(int id, string parametar);
 
 
     }

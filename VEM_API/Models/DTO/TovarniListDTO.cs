@@ -5,10 +5,10 @@ using System.Web;
 
 namespace VEM_API.Models
 {
-    public class LTovarniList
+    public class TovarniListDTO
     {
         public int tl_broj { get; set; }
         public DateTime? tl_datum { get; set; }
-        public LVozaci vzc_vozac { get; set; }
+        public VozaciDTO vzc_vozac { get; set; }
     }
 }

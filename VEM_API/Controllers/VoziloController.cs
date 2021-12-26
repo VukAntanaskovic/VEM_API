@@ -22,7 +22,7 @@ namespace VEM_API.Controllers
 
         [Route("api/TMS/Vozilo/GetAllVozila")]
         [BasicAuthentication]
-        public IEnumerable<LVozilo> Get()
+        public IEnumerable<VoziloDTO> Get()
         {
             return _voziloRepository.GetAllVozila();
         }
@@ -30,7 +30,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>/5
         [Route("api/TMS/Vozilo/GetVoziloByParametar/{parametar}")]
         [BasicAuthentication]
-        public IEnumerable<LVozilo> Get(string parametar)
+        public IEnumerable<VoziloDTO> Get(string parametar)
         {
             return _voziloRepository.GetVoziloByParametar(parametar);
         }
@@ -38,7 +38,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/TMS/Vozilo/CreateNewVozilo")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody]LVozilo vozilo)
+        public HttpResponseMessage Post([FromBody]VoziloDTO vozilo)
         {
             if (_voziloRepository.CreateNewVozilo(vozilo))
             {
@@ -53,7 +53,7 @@ namespace VEM_API.Controllers
         // PUT api/<controller>/5
         [Route("api/TMS/Vozilo/UpdateVozilo/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage Put(int id, [FromBody]LVozilo vozilo)
+        public HttpResponseMessage Put(int id, [FromBody]VoziloDTO vozilo)
         {
             if (_voziloRepository.UpdateVozilo(id, vozilo))
             {

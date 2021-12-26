@@ -24,7 +24,7 @@ namespace VEM_API.Controllers
         [Route("api/TMS/Isporuke/GetAllUnetaIsporuka/{status}")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LIsporuka> GetAllIsporukaByStatus(int status)
+        public IEnumerable<IsporukaDTO> GetAllIsporukaByStatus(int status)
         {
             return _isporukaRepository.GetAllIsporukaByStatus(status);
         }
@@ -33,7 +33,7 @@ namespace VEM_API.Controllers
         [Route("api/TMS/Isporuke/CheckStatusIsporuke")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LIsporuka> CheckStatusIsporuke(int? isporuka, DateTime? datum)
+        public IEnumerable<IsporukaDTO> CheckStatusIsporuke(int? isporuka, DateTime? datum)
         {
             return _isporukaRepository.CheckStatusIsporuke(isporuka, datum);
         }
@@ -41,7 +41,7 @@ namespace VEM_API.Controllers
         [Route("api/TMS/Isporuke/GetAllTovarniList")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LTovarniList> GetAllTL()
+        public IEnumerable<TovarniListDTO> GetAllTL()
         {
             return _isporukaRepository.GetAllTovarniList();
         }
@@ -64,7 +64,7 @@ namespace VEM_API.Controllers
         [Route("api/TMS/Isporuke/GetStavkeTl/{tl}")]
         [BasicAuthentication]
         [HttpGet]
-        public IEnumerable<LStavkeTovarnogLista> GetStavkeTl(int tl)
+        public IEnumerable<StavkeTovarnogListaDTO> GetStavkeTl(int tl)
         {
             return _isporukaRepository.GetAllStavkeTL(tl);
         }

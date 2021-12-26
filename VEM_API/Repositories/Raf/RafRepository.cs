@@ -45,7 +45,7 @@ namespace VEM_API.Repositories
             }
         }
 
-        public bool CreateNewRaf(LRaf raf)
+        public bool CreateNewRaf(RafDTO raf)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             if (raf != null)
@@ -77,47 +77,87 @@ namespace VEM_API.Repositories
 
         }
 
-        public IEnumerable<LZalihaArtikla> GetAllArtikalInRaf(int raf_sifra)
+        public IEnumerable<ZalihaArtiklaDTO> GetAllArtikalInRaf(int raf_sifra)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            var sveZalihe = from zal in db.Zaliha_artikla
-                            join art in db.Artikals on zal.art_sifra equals art.art_sifra
-                            join psl in db.Poslovnicas on zal.psl_poslovnica equals psl.psl_sifra
-                            join jed in db.Jedinica_Mere on art.art_jedinica_mere equals jed.jed_sifra
-                            join dob in db.Komitents on art.kom_dobavljac equals dob.kom_sifra
-                            join raf in db.Rafs on zal.raf_sifra equals raf.raf_sifra
-                            where zal.raf_sifra == raf_sifra
-                            select new { zal, art, psl, jed, dob, raf };
-            List<LZalihaArtikla> zaliha = new List<LZalihaArtikla>();
-            foreach (var art in sveZalihe)
+            List<ZalihaArtiklaDTO> result = null;
+
+            try
             {
-                zaliha.Add(new LZalihaArtikla(art.zal.zal_sifra,
-                      new LArtikal(art.art.art_sifra, art.art.art_naziv, art.art.art_proizvodjac, art.art.art_ean, new LJedinicaMere(art.jed.jed_sifra, art.jed.jed_naziv, art.jed.jed_kratki_naziv),
-                      new LKomitent(art.dob.kom_sifra, art.dob.kom_naziv, art.dob.kom_adresa, art.dob.kom_grad, art.dob.kom_ptt, Convert.ToBoolean(art.dob.kom_dobavljac), Convert.ToBoolean(art.dob.kom_aktivan), art.dob.kom_PIB, art.dob.kom_MBR),
-                      art.art.art_tip, Convert.ToBoolean(art.art.art_aktivan)),
-                      Convert.ToInt32(art.zal.art_dostupna_kolicina), Convert.ToInt32(art.zal.art_rezervisana_kolicina),
-                      new LPoslovnica(art.psl.psl_sifra, art.psl.psl_naziv, Convert.ToBoolean(art.psl.psl_aktivna)),
-                      new LRaf(art.raf.raf_sifra, art.raf.raf_lokacija, Convert.ToInt32(art.raf.psl_poslovnica)))
-                    );
+                result = (from zal in db.Zaliha_artikla
+                          join art in db.Artikals on zal.art_sifra equals art.art_sifra
+                          join psl in db.Poslovnicas on zal.psl_poslovnica equals psl.psl_sifra
+                          join jed in db.Jedinica_Mere on art.art_jedinica_mere equals jed.jed_sifra
+                          join dob in db.Komitents on art.kom_dobavljac equals dob.kom_sifra
+                          join raf in db.Rafs on zal.raf_sifra equals raf.raf_sifra
+
+                          where zal.raf_sifra == raf_sifra
+
+                          select new ZalihaArtiklaDTO() 
+                          { 
+                             zal_sifra = zal.zal_sifra,
+                             art_dostupna_kolicina = zal.art_dostupna_kolicina,
+                             art_rezervisana_kolicina = zal.art_rezervisana_kolicina,
+
+                             artikal = new ArtikalDTO()
+                             {
+                                 art_sifra = art.art_sifra,
+                                 art_naziv = art.art_naziv,
+                                 art_proizvodjac = art.art_proizvodjac,
+                                 art_tip = art.art_tip,
+                                 art_ean = art.art_ean,
+
+                                 jedinica_mere = new JedinicaMereDTO()
+                                 {
+                                     jed_sifra = jed.jed_sifra,
+                                     jed_naziv = jed.jed_naziv,
+                                     jed_kratki_naziv = jed.jed_kratki_naziv
+                                 },
+
+                                 dobavljac = new KomitentDTO()
+                                 {
+                                     kom_sifra = dob.kom_sifra,
+                                     kom_naziv = dob.kom_naziv
+                                 }
+                             },
+
+                             poslovnica = new PoslovnicaDTO()
+                             {
+                                 psl_sifra = psl.psl_sifra,
+                                 psl_naziv = psl.psl_naziv
+                             },
+
+                             raf = new RafDTO()
+                             {
+                                 raf_sifra = raf.raf_sifra,
+                                 raf_lokacija = raf.raf_lokacija,
+                                 psl_poslovnica = raf.psl_poslovnica
+                             }
+                          }).ToList();
             }
-            return zaliha;
+            catch(Exception ex)
+            {
+                _logProvider.AddToLog($"GetAllArtikalInRaf(raf_sifra: {raf_sifra})", ex.Message, true);
+            }
+
+            return result;
         }
 
-        public IEnumerable<LRaf> GetAllRaf()
+        public IEnumerable<RafDTO> GetAllRaf()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LRaf> rafovi = new List<LRaf>();
+            List<RafDTO> rafovi = new List<RafDTO>();
             var raf = from n in db.Rafs
                       orderby n.psl_poslovnica
                       select n;
             foreach (var r in raf)
             {
-                rafovi.Add(new LRaf(r.raf_sifra, r.raf_lokacija, Convert.ToInt32(r.psl_poslovnica)));
+                rafovi.Add(new RafDTO(r.raf_sifra, r.raf_lokacija, Convert.ToInt32(r.psl_poslovnica)));
             }
             return rafovi;
         }
 
-        public bool UpdateRaf(int id, LRaf lokacija)
+        public bool UpdateRaf(int id, RafDTO lokacija)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
@@ -149,16 +189,16 @@ namespace VEM_API.Repositories
 
         }
 
-        public IEnumerable<LRaf> GetAllRafInPoslovnica(int id, string parametar)
+        public IEnumerable<RafDTO> GetAllRafInPoslovnica(int id, string parametar)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LRaf> rafovi = new List<LRaf>();
+            List<RafDTO> rafovi = new List<RafDTO>();
             if (string.IsNullOrEmpty(parametar))
             {
 
                 foreach (var r in db.Rafs.Where(x => x.psl_poslovnica == id || x.psl_poslovnica == null))
                 {
-                    rafovi.Add(new LRaf(r.raf_sifra, r.raf_lokacija, Convert.ToInt32(r.psl_poslovnica)));
+                    rafovi.Add(new RafDTO(r.raf_sifra, r.raf_lokacija, Convert.ToInt32(r.psl_poslovnica)));
                 }
 
                 return rafovi;
@@ -169,7 +209,7 @@ namespace VEM_API.Repositories
                 int.TryParse(parametar, out sifraPsl);
                 foreach (var r in db.Rafs.Where(x => (x.psl_poslovnica == id || x.psl_poslovnica == null) && (x.raf_sifra == sifraPsl || x.raf_lokacija.StartsWith(parametar))))
                 {
-                    rafovi.Add(new LRaf(r.raf_sifra, r.raf_lokacija, Convert.ToInt32(r.psl_poslovnica)));
+                    rafovi.Add(new RafDTO(r.raf_sifra, r.raf_lokacija, Convert.ToInt32(r.psl_poslovnica)));
                 }
 
                 return rafovi;

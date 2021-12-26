@@ -9,10 +9,10 @@ namespace VEM_API.Repositories
 {
     public interface IVozacRepository
     {
-        IEnumerable<LVozaci> GetAllVozace();
-        IEnumerable<LVozaci> GetVozaceBySifra(int sifra);
-        bool CreateNewVozac(LVozaci vozac);
-        bool UpdateVozac(int id, LVozaci vozac);
+        IEnumerable<VozaciDTO> GetAllVozace();
+        IEnumerable<VozaciDTO> GetVozaceBySifra(int sifra);
+        bool CreateNewVozac(VozaciDTO vozac);
+        bool UpdateVozac(int id, VozaciDTO vozac);
 
     }
 }

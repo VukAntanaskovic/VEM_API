@@ -23,7 +23,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>
         [Route("api/TMS/Vozaci/GetAllVozace")]
         [BasicAuthentication]
-        public IEnumerable<LVozaci> Get()
+        public IEnumerable<VozaciDTO> Get()
         {
             return _vozacRepository.GetAllVozace();
         }
@@ -31,7 +31,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>/5
         [Route("api/TMS/Vozaci/GetVozaceBySifra/{id}")]
         [BasicAuthentication]
-        public IEnumerable<LVozaci> Get(int id)
+        public IEnumerable<VozaciDTO> Get(int id)
         {
             return _vozacRepository.GetVozaceBySifra(id);
         }
@@ -39,7 +39,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/TMS/Vozaci/CreateNewVozac")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody]LVozaci vozaci)
+        public HttpResponseMessage Post([FromBody]VozaciDTO vozaci)
         {
             if (_vozacRepository.CreateNewVozac(vozaci))
             {
@@ -54,7 +54,7 @@ namespace VEM_API.Controllers
         // PUT api/<controller>/5
         [Route("api/TMS/Vozaci/UpdateVozac/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage Put(int id, [FromBody]LVozaci vozac)
+        public HttpResponseMessage Put(int id, [FromBody]VozaciDTO vozac)
         {
             if (_vozacRepository.UpdateVozac(id, vozac))
             {

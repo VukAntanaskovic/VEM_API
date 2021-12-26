@@ -9,12 +9,12 @@ namespace VEM_API.Repositories
 {
     public interface IZalihaRepository
     {
-        bool AddToZalihaArtikla(LZalihaArtikla zaliha);
-        IEnumerable<LZalihaArtikla> GetAllZaliheArtikla(int psl_sifra);
+        bool AddToZalihaArtikla(ZalihaArtiklaDTO zaliha);
+        IEnumerable<ZalihaArtiklaDTO> GetAllZaliheArtikla(int psl_sifra);
 
-        IEnumerable<LZalihaArtikla> FindZalihaArtikla(int psl_sifra, string parametar);
+        IEnumerable<ZalihaArtiklaDTO> FindZalihaArtikla(int psl_sifra, string parametar);
         bool AddToRaf(int art_sifra, int psl_sifra, int rad_sifra);
-        IEnumerable<LZalihaArtikla> GetAllArtikalInRaf(int raf_sifra);
+        IEnumerable<ZalihaArtiklaDTO> GetAllArtikalInRaf(int raf_sifra);
 
     }
 }

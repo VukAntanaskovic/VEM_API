@@ -20,14 +20,14 @@ namespace VEM_API.Repositories
             _logProvider = logProvider;
             _entity = entity;
         }
-        public IEnumerable<LVozilo> GetAllVozila()
+        public IEnumerable<VoziloDTO> GetAllVozila()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LVozilo> vozilo = new List<LVozilo>();
+            List<VoziloDTO> vozilo = new List<VoziloDTO>();
 
             foreach (var v in db.Voziloes)
             {
-                vozilo.Add(new LVozilo
+                vozilo.Add(new VoziloDTO
                 {
                     vzl_sifra = v.vzl_sifra,
                     vzl_marka = v.vzl_marka,
@@ -40,16 +40,16 @@ namespace VEM_API.Repositories
             return vozilo;
         }
 
-        public IEnumerable<LVozilo> GetVoziloByParametar(string parametar)
+        public IEnumerable<VoziloDTO> GetVoziloByParametar(string parametar)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LVozilo> vozilo = new List<LVozilo>();
+            List<VoziloDTO> vozilo = new List<VoziloDTO>();
             int sifra;
             int.TryParse(parametar, out sifra);
 
             foreach (var v in db.Voziloes.Where(x => (x.vzl_sifra == sifra) || (x.vzl_registracija.Equals(parametar) || x.vzl_model.StartsWith(parametar) || x.vzl_marka.StartsWith(parametar))))
             {
-                vozilo.Add(new LVozilo
+                vozilo.Add(new VoziloDTO
                 {
                     vzl_sifra = v.vzl_sifra,
                     vzl_marka = v.vzl_marka,
@@ -62,7 +62,7 @@ namespace VEM_API.Repositories
             return vozilo;
         }
 
-        public bool CreateNewVozilo(LVozilo vozilo)
+        public bool CreateNewVozilo(VoziloDTO vozilo)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             if (vozilo != null)
@@ -97,7 +97,7 @@ namespace VEM_API.Repositories
             }
         }
 
-        public bool UpdateVozilo(int id, LVozilo vozilo)
+        public bool UpdateVozilo(int id, VoziloDTO vozilo)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try

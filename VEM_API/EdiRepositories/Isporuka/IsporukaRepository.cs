@@ -63,10 +63,10 @@ namespace VEM_API.EdiRepositories
                 _logProvider.AddToLog("CreateNewIsporuka(int primalac, DateTime datum, int veza)", "Greska prilikom unosa isporuke: " + ex.Message, true);
             }
         }
-        public IEnumerable<LIsporuka> GetAllIsporukaByStatus(int status)
+        public IEnumerable<IsporukaDTO> GetAllIsporukaByStatus(int status)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LIsporuka> isporuke = new List<LIsporuka>();
+            List<IsporukaDTO> isporuke = new List<IsporukaDTO>();
 
             if (status == 0)
             {
@@ -87,7 +87,7 @@ namespace VEM_API.EdiRepositories
                 foreach (var isp in query)
                 {
                     isporuke.Add(
-                        new LIsporuka
+                        new IsporukaDTO
                         {
                             isp_broj = isp.isp.isp_broj,
                             dok_veza = isp.isp.dok_veza,
@@ -105,7 +105,7 @@ namespace VEM_API.EdiRepositories
                                pri_email = isp.pri.pri_email
                             },
 
-                            sts_status = new LStatusIsporuke
+                            sts_status = new StatusIsporukeDTO
                             {
                                 sts_sifra = isp.sts.sts_sifra,
                                 sts_naziv = isp.sts.sts_naziv
@@ -136,7 +136,7 @@ namespace VEM_API.EdiRepositories
                 foreach (var isp in sveIsporuke)
                 {
                     isporuke.Add(
-                        new LIsporuka
+                        new IsporukaDTO
                         {
                             isp_broj = isp.isp.isp_broj,
                             dok_veza = isp.isp.dok_veza,
@@ -154,7 +154,7 @@ namespace VEM_API.EdiRepositories
                                 pri_email = isp.pri.pri_email
                             },
 
-                            sts_status = new LStatusIsporuke
+                            sts_status = new StatusIsporukeDTO
                             {
                                 sts_sifra = isp.sts.sts_sifra,
                                 sts_naziv = isp.sts.sts_naziv
@@ -165,10 +165,10 @@ namespace VEM_API.EdiRepositories
                 return isporuke;
             }
         }
-        public IEnumerable<LIsporuka> CheckStatusIsporuke(int? isporuka, DateTime? datum)
+        public IEnumerable<IsporukaDTO> CheckStatusIsporuke(int? isporuka, DateTime? datum)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LIsporuka> isporuke = new List<LIsporuka>();
+            List<IsporukaDTO> isporuke = new List<IsporukaDTO>();
 
             var sveIsporuke =
                         from isp in db.Isporukas
@@ -188,7 +188,7 @@ namespace VEM_API.EdiRepositories
             foreach (var isp in sveIsporuke)
             {
                 isporuke.Add(
-                    new LIsporuka
+                    new IsporukaDTO
                     {
                         isp_broj = isp.isp.isp_broj,
                         dok_veza = isp.isp.dok_veza,
@@ -206,7 +206,7 @@ namespace VEM_API.EdiRepositories
                             pri_email = isp.pri.pri_email
                         },
 
-                        sts_status = new LStatusIsporuke
+                        sts_status = new StatusIsporukeDTO
                         {
                             sts_sifra = isp.sts.sts_sifra,
                             sts_naziv = isp.sts.sts_naziv
@@ -317,10 +317,10 @@ namespace VEM_API.EdiRepositories
                 return false;
             }
         }
-        public IEnumerable<LTovarniList> GetAllTovarniList()
+        public IEnumerable<TovarniListDTO> GetAllTovarniList()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LTovarniList> tovarniListovi = new List<LTovarniList>();
+            List<TovarniListDTO> tovarniListovi = new List<TovarniListDTO>();
 
             var tvrl =
                  from tl in db.Tovarni_List
@@ -341,11 +341,11 @@ namespace VEM_API.EdiRepositories
             foreach (var t in tvrl)
             {
                 tovarniListovi.Add(
-                    new LTovarniList
+                    new TovarniListDTO
                     {
                         tl_broj = t.tl.tl_broj,
                         tl_datum = t.tl.tl_datum_kreiranja,
-                        vzc_vozac = new LVozaci
+                        vzc_vozac = new VozaciDTO
                         {
                             vzc_sifra = t.vzc.vzc_sifra,
                             korisnik = new KorisnikDTO()
@@ -356,7 +356,7 @@ namespace VEM_API.EdiRepositories
                                 kor_username = t.kor.kor_username
                             },
 
-                            vozilo = new LVozilo
+                            vozilo = new VoziloDTO
                             {
                                 vzl_sifra = t.vzl.vzl_sifra,
                                 vzl_marka = t.vzl.vzl_marka,
@@ -402,10 +402,10 @@ namespace VEM_API.EdiRepositories
         #endregion "Tovarni list"
 
         #region "Stavke tovarnog lista"
-        public IEnumerable<LStavkeTovarnogLista> GetAllStavkeTL(int tl)
+        public IEnumerable<StavkeTovarnogListaDTO> GetAllStavkeTL(int tl)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LStavkeTovarnogLista> stavke = new List<LStavkeTovarnogLista>();
+            List<StavkeTovarnogListaDTO> stavke = new List<StavkeTovarnogListaDTO>();
 
             var stv =
                 from st in db.Stavke_Tovarnog_Lista
@@ -424,14 +424,14 @@ namespace VEM_API.EdiRepositories
             foreach (var s in stv)
             {
                 stavke.Add(
-                    new LStavkeTovarnogLista
+                    new StavkeTovarnogListaDTO
                     {
                         tl_broj = Convert.ToInt32(s.st.tl_broj),
-                        isporuka = new LIsporuka
+                        isporuka = new IsporukaDTO
                         {
                             isp_broj = s.isp.isp_broj,
                             isp_datum = s.isp.isp_datum,
-                            sts_status = new LStatusIsporuke
+                            sts_status = new StatusIsporukeDTO
                             {
                                 sts_sifra = s.sts.sts_sifra,
                                 sts_naziv = s.sts.sts_naziv

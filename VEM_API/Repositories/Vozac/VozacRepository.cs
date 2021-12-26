@@ -21,67 +21,90 @@ namespace VEM_API.Repositories
             _entity = entity;
         }
 
-        public IEnumerable<LVozaci> GetAllVozace()
+        public IEnumerable<VozaciDTO> GetAllVozace()
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LVozaci> vozaci = new List<LVozaci>();
-            var upit = from vzc in db.Vozacs
-                       join kor in db.Korisnik_Sistema on vzc.kor_sifra equals kor.kor_sifra
-                       join vzl in db.Voziloes on vzc.vzl_sifra equals vzl.vzl_sifra
-                       select new { vzc, kor, vzl };
+            List<VozaciDTO> result = null;
 
-            foreach (var v in upit)
+            try
             {
-                vozaci.Add(new LVozaci()
-                {
-                    vzc_sifra = v.vzc.vzc_sifra,
-                    korisnik = new LKorisnik(v.kor.kor_sifra, v.kor.kor_ime, v.kor.kor_prezime, v.kor.kor_telefon, v.kor.kor_username, null, v.kor.atr_autorizacija, v.kor.psl_poslovnica_rada.ToString()),
-                    vozilo = new LVozilo()
-                    {
-                        vzl_sifra = v.vzl.vzl_sifra,
-                        vzl_marka = v.vzl.vzl_marka,
-                        vzl_model = v.vzl.vzl_model,
-                        vzl_registracija = v.vzl.vzl_registracija,
-                        vzl_aktivno = v.vzl.vzl_aktivno,
-                        vzl_slika = v.vzl.vzl_slika
-                    }
-                });
+                result = (from vzc in db.Vozacs
+                          join kor in db.Korisnik_Sistema on vzc.kor_sifra equals kor.kor_sifra
+                          join vzl in db.Voziloes on vzc.vzl_sifra equals vzl.vzl_sifra
+
+                          select new VozaciDTO()
+                          {
+                              vzc_sifra = vzc.vzc_sifra,
+
+                              korisnik = new KorisnikDTO()
+                              {
+                                  kor_sifra = kor.kor_sifra,
+                                  kor_ime = kor.kor_ime,
+                                  kor_prezime = kor.kor_prezime,
+                                  kor_username = kor.kor_username
+                              },
+
+                              vozilo = new VoziloDTO()
+                              {
+                                  vzl_sifra = vzl.vzl_sifra,
+                                  vzl_model = vzl.vzl_model,
+                                  vzl_marka = vzl.vzl_marka,
+                                  vzl_slika = vzl.vzl_slika,
+                                  vzl_registracija = vzl.vzl_registracija
+                              }
+                          }).ToList();
+            }
+            catch(Exception ex)
+            {
+                _logProvider.AddToLog("GetAllVozace()", ex.Message, true);
             }
 
-            return vozaci;
+            return result;
         }
-        public IEnumerable<LVozaci> GetVozaceBySifra(int sifra)
+        public IEnumerable<VozaciDTO> GetVozaceBySifra(int sifra)
         {
             VEMTESTEntities db = new VEMTESTEntities();
-            List<LVozaci> vozaci = new List<LVozaci>();
-            var upit = from vzc in db.Vozacs
-                       join kor in db.Korisnik_Sistema on vzc.kor_sifra equals kor.kor_sifra
-                       join vzl in db.Voziloes on vzc.vzl_sifra equals vzl.vzl_sifra
-                       where vzc.vzc_sifra == sifra
-                       select new { vzc, kor, vzl };
+            List<VozaciDTO> result = null;
 
-            foreach (var v in upit)
+            try
             {
-                vozaci.Add(new LVozaci()
-                {
-                    vzc_sifra = v.vzc.vzc_sifra,
-                    korisnik = new LKorisnik(v.kor.kor_sifra, v.kor.kor_ime, v.kor.kor_prezime, v.kor.kor_telefon, v.kor.kor_username, null, v.kor.atr_autorizacija, v.kor.psl_poslovnica_rada.ToString()),
-                    vozilo = new LVozilo()
-                    {
-                        vzl_sifra = v.vzl.vzl_sifra,
-                        vzl_marka = v.vzl.vzl_marka,
-                        vzl_model = v.vzl.vzl_model,
-                        vzl_registracija = v.vzl.vzl_registracija,
-                        vzl_aktivno = v.vzl.vzl_aktivno,
-                        vzl_slika = v.vzl.vzl_slika
-                    }
-                });
+                result = (from vzc in db.Vozacs
+                          join kor in db.Korisnik_Sistema on vzc.kor_sifra equals kor.kor_sifra
+                          join vzl in db.Voziloes on vzc.vzl_sifra equals vzl.vzl_sifra
+
+                          where vzc.vzc_sifra == sifra
+
+                          select new VozaciDTO()
+                          {
+                              vzc_sifra = vzc.vzc_sifra,
+
+                              korisnik = new KorisnikDTO()
+                              {
+                                  kor_sifra = kor.kor_sifra,
+                                  kor_ime = kor.kor_ime,
+                                  kor_prezime = kor.kor_prezime,
+                                  kor_username = kor.kor_username
+                              },
+
+                              vozilo = new VoziloDTO()
+                              {
+                                  vzl_sifra = vzl.vzl_sifra,
+                                  vzl_model = vzl.vzl_model,
+                                  vzl_marka = vzl.vzl_marka,
+                                  vzl_slika = vzl.vzl_slika,
+                                  vzl_registracija = vzl.vzl_registracija
+                              }
+                          }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logProvider.AddToLog($"GetVozaceBySifra(sifra: {sifra})", ex.Message, true);
             }
 
-            return vozaci;
+            return result;
         }
 
-        public bool CreateNewVozac(LVozaci vozac)
+        public bool CreateNewVozac(VozaciDTO vozac)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try
@@ -105,7 +128,7 @@ namespace VEM_API.Repositories
             }
         }
 
-        public bool UpdateVozac(int id, LVozaci vozac)
+        public bool UpdateVozac(int id, VozaciDTO vozac)
         {
             VEMTESTEntities db = new VEMTESTEntities();
             try

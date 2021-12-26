@@ -22,7 +22,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>/5
         [Route("api/WMS/ZalihaArtikla/GetAllZaliheArtikla/{psl_sifra}")]
         [BasicAuthentication]
-        public IEnumerable<LZalihaArtikla> Get(int psl_sifra, string parametar)
+        public IEnumerable<ZalihaArtiklaDTO> Get(int psl_sifra, string parametar)
         {
             if (parametar == null)
             {
@@ -37,7 +37,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/WMS/ZalihaArtikla/AddToZalihaArtikla")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody] LZalihaArtikla zaliha)
+        public HttpResponseMessage Post([FromBody] ZalihaArtiklaDTO zaliha)
         {
             if (_zalihaRepository.AddToZalihaArtikla(zaliha))
             {

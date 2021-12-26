@@ -22,7 +22,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>
         [Route("api/WMS/Raf/GetAllRaf")]
         [BasicAuthentication]
-        public IEnumerable<LRaf> Get()
+        public IEnumerable<RafDTO> Get()
         {
             return _rafRepository.GetAllRaf().ToList();
         }
@@ -30,7 +30,7 @@ namespace VEM_API.Controllers
         // GET api/<controller>/5
         [Route("api/WMS/Raf/GetAllRafInPoslovnica/{id}")]
         [BasicAuthentication]
-        public IEnumerable<LRaf> Get(int id, string parametar)
+        public IEnumerable<RafDTO> Get(int id, string parametar)
         {
             return _rafRepository.GetAllRafInPoslovnica(id, parametar);
         }
@@ -38,7 +38,7 @@ namespace VEM_API.Controllers
         // POST api/<controller>
         [Route("api/WMS/Raf/CreateNewRaf")]
         [BasicAuthentication]
-        public HttpResponseMessage Post([FromBody]LRaf raf)
+        public HttpResponseMessage Post([FromBody]RafDTO raf)
         {
             if (_rafRepository.CreateNewRaf(raf))
             {
@@ -53,7 +53,7 @@ namespace VEM_API.Controllers
         // PUT api/<controller>/5
         [Route("api/WMS/Raf/UpdateRaf/{id}")]
         [BasicAuthentication]
-        public HttpResponseMessage Put(int id, [FromBody] LRaf lokacija)
+        public HttpResponseMessage Put(int id, [FromBody] RafDTO lokacija)
         {
             if (_rafRepository.UpdateRaf(id, lokacija))
             {

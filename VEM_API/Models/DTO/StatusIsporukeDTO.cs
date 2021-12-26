@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VEM_API.Models
 {
-    public class LStatusIsporuke
+    public class StatusIsporukeDTO
     {
         public int sts_sifra { get; set; }
         public string sts_naziv { get; set; }

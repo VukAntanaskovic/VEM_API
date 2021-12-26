@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VEM_API.Models
 {
-    public class LVozilo
+    public class VoziloDTO
     {
         public int vzl_sifra { get; set; }
         public string vzl_marka { get; set; }

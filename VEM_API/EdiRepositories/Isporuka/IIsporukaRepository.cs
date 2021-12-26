@@ -25,7 +25,7 @@ namespace VEM_API.EdiRepositories
         /// </summary>
         /// <param name="status"></param>
         /// <returns></returns>
-        IEnumerable<LIsporuka> GetAllIsporukaByStatus(int status);
+        IEnumerable<IsporukaDTO> GetAllIsporukaByStatus(int status);
 
         /// <summary>
         /// Kolekcija isporuka po sifri isporuke ili datumu
@@ -33,7 +33,7 @@ namespace VEM_API.EdiRepositories
         /// <param name="isporuka"></param>
         /// <param name="datum"></param>
         /// <returns></returns>
-        IEnumerable<LIsporuka> CheckStatusIsporuke(int? isporuka, DateTime? datum);
+        IEnumerable<IsporukaDTO> CheckStatusIsporuke(int? isporuka, DateTime? datum);
 
         /// <summary>
         /// Promena statusa isporuke
@@ -71,7 +71,7 @@ namespace VEM_API.EdiRepositories
         /// Kolekcija tovarnih listova
         /// </summary>
         /// <returns></returns>
-        IEnumerable<LTovarniList> GetAllTovarniList();
+        IEnumerable<TovarniListDTO> GetAllTovarniList();
 
         /// <summary>
         /// Dodavanje isporuke na TL
@@ -88,7 +88,7 @@ namespace VEM_API.EdiRepositories
         /// </summary>
         /// <param name="tl"></param>
         /// <returns></returns>
-        IEnumerable<LStavkeTovarnogLista> GetAllStavkeTL(int tl);
+        IEnumerable<StavkeTovarnogListaDTO> GetAllStavkeTL(int tl);
         #endregion "Stavke tovarnog lista"
     }
 }

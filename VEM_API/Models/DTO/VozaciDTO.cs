@@ -5,10 +5,10 @@ using System.Web;
 
 namespace VEM_API.Models
 {
-    public class LVozaci
+    public class VozaciDTO
     {
         public int vzc_sifra { get; set; }
         public KorisnikDTO korisnik { get; set; }
-        public LVozilo vozilo { get; set; }
+        public VoziloDTO vozilo { get; set; }
     }
 }
